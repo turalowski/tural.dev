@@ -14,7 +14,6 @@ export default function Home() {
           Tural Hajiyev
         </h2>
         <Education />
-        <div></div>
       </div>
     </main>
   );
