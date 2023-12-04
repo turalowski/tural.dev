@@ -7,8 +7,8 @@ import {
 
 export default function Education() {
   return (
-    <>
-      <h4 className="scroll-m-20  text-lg font-semibold tracking-tight">
+    <div className="flex flex-col">
+      <h4 className="scroll-m-20  text-lg font-semibold tracking-tight mb-1">
         Education
       </h4>
       <Tabs defaultValue="master" className="h-full w-full grow space-y-6">
@@ -66,6 +66,6 @@ export default function Education() {
           </div>
         </TabsContent>
       </Tabs>
-    </>
+    </div>
   );
 }

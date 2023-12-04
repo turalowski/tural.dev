@@ -17,12 +17,6 @@ export default function Navbar({
       >
         Home
       </Link>
-      <Link
-        href="/examples/dashboard"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-      >
-        Products
-      </Link>
     </nav>
   );
 }
