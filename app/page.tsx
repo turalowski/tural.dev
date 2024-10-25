@@ -1,5 +1,4 @@
 import { TwitterLogoIcon, GitHubLogoIcon } from '@radix-ui/react-icons';
-import { IoDocumentText } from 'react-icons/io5';
 import { Button } from './components/ui/button';
 import Link from 'next/link';
 import {
@@ -28,19 +27,19 @@ export default function Home() {
               <TooltipContent>GitHub</TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          {/* <TooltipProvider> */}
-          {/*   <Tooltip> */}
-          {/*     <TooltipTrigger asChild> */}
-          {/*       <Link target="_blank" href="https://github.com/turalowski"> */}
-          {/*         <Button variant="outline" size="icon"> */}
-          {/*           <IoDocumentText /> */}
-          {/*           <span className="sr-only">Github</span> */}
-          {/*         </Button> */}
-          {/*       </Link> */}
-          {/*     </TooltipTrigger> */}
-          {/*     <TooltipContent>CV</TooltipContent> */}
-          {/*   </Tooltip> */}
-          {/* </TooltipProvider> */}
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link href="/portfolio">
+                  <Button variant="outline" size="icon">
+                    <span>📁</span>
+                    <span className="sr-only">Portfolio</span>
+                  </Button>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>Portfolio</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>

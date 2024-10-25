@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Source_Code_Pro } from 'next/font/google';
-import { ThemeProvider } from '@/app/components/theme-provider';
+import { ThemeProvider } from './components/theme-provider';
 import './globals.css';
 
 const source_code_pro = Source_Code_Pro({ subsets: ['latin'] });
