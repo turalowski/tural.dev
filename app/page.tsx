@@ -27,7 +27,7 @@ export default function Home() {
               <TooltipContent>GitHub</TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <TooltipProvider>
+          {/* <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link href="/portfolio">
@@ -39,7 +39,7 @@ export default function Home() {
               </TooltipTrigger>
               <TooltipContent>Portfolio</TooltipContent>
             </Tooltip>
-          </TooltipProvider>
+          </TooltipProvider> */}
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
