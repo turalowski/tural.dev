@@ -1,185 +1,92 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent } from '../components/ui/card';
-import {
-  Carousel,
-  CarouselApi,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '../components/ui/carousel';
 import Image from 'next/image';
-import useEmblaCarousel from 'embla-carousel-react';
+import { useState } from 'react';
+import { Button } from '../components/ui/button';
+import { ArrowLeftIcon, GitHubLogoIcon } from '@radix-ui/react-icons';
 
-const galleryItems = [
-  {
-    src: '/images/orders.jpg',
-    thumbnail: '/images/orders.jpg',
-    alt: 'Orders',
-    subHtml: '<h4>Prospect ERP</h4><p>Orders module to manage and track orders</p>',
-  },
-  {
-    src: '/images/orders-detail.png',
-    thumbnail: '/images/orders-detail.png',
-    alt: 'Image 3',
-    subHtml: '<h4>Image 3</h4><p>Description for Image 3</p>',
-  },
-  {
-    src: '/images/sales.jpg',
-    thumbnail: '/images/sales.jpg',
-    alt: 'Image 4',
-    subHtml: '<h4>Image 4</h4><p>Description for Image 4</p>',
-  },
-  {
-    src: '/images/trade-operation-detail.png',
-    thumbnail: '/images/trade-operation-detail.png',
-    alt: 'Trade Operation Detail',
-    subHtml: '<h4>Trade Operation Detail</h4><p>Detailed view of trade operations</p>',
-  },
-  {
-    src: '/images/new-operation.png',
-    thumbnail: '/images/new-operation.png',
-    alt: 'New Operation',
-    subHtml: '<h4>New Operation</h4><p>Interface for creating a new operation</p>',
-  },
-  {
-    src: '/images/make-payment.png',
-    thumbnail: '/images/make-payment.png',
-    alt: 'Make Payment',
-    subHtml: '<h4>Make Payment</h4><p>Interface for making payments</p>',
-  },
-  // Add more items as needed
-];
 
-const CarouselSize = () => {
-  const [selectedImage, setSelectedImage] = useState(galleryItems[0]);
-  const [api, setApi] = React.useState<CarouselApi>()
-  const [currentIndex, setCurrentIndex] = useState(0);
+export default function PortfolioPage() {
+  const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
+  const portfolioItems = [
+    {
+      id: 1,
+      title: 'Technote Media',
+      image: '/images/technote/main-dark.png',
+      description: 'Landing Page | Dark Theme',
+    },
+    {
+      id: 2,
+      title: 'Technote Media',
+      image: '/images/technote/post-dark.png',
+      description: 'Post Page | Dark Theme',
+    },
+    {
+      id: 3,
+      title: 'Technote Media',
+      image: '/images/technote/contact-dark.png',
+      description: 'Contact Page | Dark Theme',
+    },
+    // Add more projects as needed
+  ];
 
-  useEffect(() => {
-    if (!api) {
-      return
-    }
- 
-    api.on("select", () => {
-      setCurrentIndex(api.selectedScrollSnap());
-    })
-  }, [api])
+  const openFullscreen = (image: string) => {
+    setFullscreenImage(image);
+  };
 
-  useEffect(() => {
-    setSelectedImage(galleryItems[currentIndex]);
-  }, [currentIndex]);
+  const closeFullscreen = () => {
+    setFullscreenImage(null);
+  };
 
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center p-4 overflow-visible gap-24">
-   <div className='text-center'>
-   <h1 className="text-3xl font-bold mb-2">Prospect ERP - Sales Module</h1>
-    <p className="text-base mb-6">Create, manage, and analyze sales operations with detailed insights and efficient workflows.</p>
-      <div className="mb-4 w-full h-[500px] relative">
-        <Image
-          src={selectedImage.src}
-          alt={selectedImage.alt}
-          fill
-          style={{ objectFit: 'contain' }}
-          className="w-full h-full"
-        />
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex items-center gap-3">
+        <Button variant="outline" size="icon">
+          <ArrowLeftIcon  className="h-4 w-4" />
+        </Button>
+        <h1 className="text-2xl font-bold">My Portfolio</h1>
+        <Button variant="outline" size="icon" className="ml-auto">
+          <GitHubLogoIcon className="h-4 w-4" />
+        </Button>
       </div>
-      <Carousel
-        opts={{
-          align: 'start',
-          loop: true,
-        }}
-        className="w-full max-w-4xl"
-        setApi={setApi}
-      >
-        <CarouselContent>
-          {galleryItems.map((item, index) => (
-            <CarouselItem key={index} className="basis-1/6">
-              <div className="p-1">
-                <Card>
-                  <CardContent 
-                    className="flex aspect-square items-center justify-center p-2 cursor-pointer"
-                    onClick={() => {
-                      setSelectedImage(item);
-                      api?.scrollTo(index);
-                    }}
-                  >
-                    <div className="relative w-full h-full">
-                      <Image
-                        src={item.thumbnail}
-                        alt={item.alt}
-                        layout="fill"
-                        objectFit="contain"
-                        className="max-h-full"
-                      />
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
-   </div>
-
-   <div className='text-center'>
-   <h1 className="text-3xl font-bold mb-2">Prospect ERP - Finance Module</h1>
-    <p className="text-base mb-6">Create, manage, and analyze finance operations with detailed insights and efficient workflows.</p>
-      <div className="mb-4 w-full h-[500px] relative">
-        <Image
-          src={selectedImage.src}
-          alt={selectedImage.alt}
-          fill
-          style={{ objectFit: 'contain' }}
-          className="w-full h-full"
-        />
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-8">
+        {portfolioItems.map(item => (
+          <div
+            key={item.id}
+            className="bg-white rounded-lg shadow-md overflow-hidden"
+          >
+            <div
+              onClick={() => openFullscreen(item.image)}
+              className="cursor-pointer"
+            >
+              <Image
+                src={item.image}
+                alt={item.title}
+                width={150}
+                height={200}
+                className="w-full h-40 object-contain object-center transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+            <div className="p-2">
+              <h2 className="text-sm font-semibold mb-1">{item.title}</h2>
+              <p className="text-xs text-gray-600">{item.description}</p>
+            </div>
+          </div>
+        ))}
       </div>
-      <Carousel
-        opts={{
-          align: 'start',
-          loop: true,
-        }}
-        className="w-full max-w-4xl"
-        setApi={setApi}
-      >
-        <CarouselContent>
-          {galleryItems.map((item, index) => (
-            <CarouselItem key={index} className="basis-1/6">
-              <div className="p-1">
-                <Card>
-                  <CardContent 
-                    className="flex aspect-square items-center justify-center p-2 cursor-pointer"
-                    onClick={() => {
-                      setSelectedImage(item);
-                      api?.scrollTo(index);
-                    }}
-                  >
-                    <div className="relative w-full h-full">
-                      <Image
-                        src={item.thumbnail}
-                        alt={item.alt}
-                        layout="fill"
-                        objectFit="contain"
-                        className="max-h-full"
-                      />
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
-   </div>
-      
+      {fullscreenImage && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
+          onClick={closeFullscreen}
+        >
+          <Image
+            src={fullscreenImage}
+            alt="Fullscreen image"
+            layout="fill"
+            objectFit="contain"
+          />
+        </div>
+      )}
     </div>
   );
 }
-
-export default CarouselSize;
