@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { Button } from '../components/ui/button';
 import { ArrowLeftIcon, GitHubLogoIcon } from '@radix-ui/react-icons';
 
-
 export default function PortfolioPage() {
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
   const portfolioItems = [
@@ -27,6 +26,31 @@ export default function PortfolioPage() {
       image: '/images/technote/contact-dark.png',
       description: 'Contact Page | Dark Theme',
     },
+    {
+      id: 4,
+      title: 'Prospect SMB',
+      image: '/images/prospect/order/orders.jpg',
+      description: 'Orders Module | List All Orders',
+    },
+    {
+      id: 4,
+      title: 'Prospect SMB',
+      image: '/images/prospect/order/detail.png',
+      description: 'Orders Module | Order Details',
+    },
+    {
+      id: 5,
+      title: 'Prospect SMB',
+      image: '/images/prospect/sales/sales.jpg',
+      description: 'Sales Module | List All Sales Operations',
+    },
+    {
+      id: 6,
+      title: 'Prospect SMB',
+      image: '/images/prospect/sales/new-operation.png',
+      description: 'Sales Module | New Sales Operation',
+    },
+
     // Add more projects as needed
   ];
 
@@ -42,7 +66,7 @@ export default function PortfolioPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center gap-3">
         <Button variant="outline" size="icon">
-          <ArrowLeftIcon  className="h-4 w-4" />
+          <ArrowLeftIcon className="h-4 w-4" />
         </Button>
         <h1 className="text-2xl font-bold">My Portfolio</h1>
         <Button variant="outline" size="icon" className="ml-auto">
