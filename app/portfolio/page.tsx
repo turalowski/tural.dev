@@ -3,10 +3,12 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { Button } from '../components/ui/button';
-import { ArrowLeftIcon, GitHubLogoIcon } from '@radix-ui/react-icons';
+import { ArrowLeftIcon, GitHubLogoIcon, ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
 
 export default function PortfolioPage() {
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
+  const [currentProjectIndex, setCurrentProjectIndex] = useState<number>(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const portfolioProjects = [
     {
       id: 1,
@@ -183,12 +185,38 @@ export default function PortfolioPage() {
     // Add more projects as needed
   ];
 
-  const openFullscreen = (image: string) => {
-    setFullscreenImage(image);
+  const openFullscreen = (projectIndex: number, imageIndex: number) => {
+    setCurrentProjectIndex(projectIndex);
+    setCurrentImageIndex(imageIndex);
+    setFullscreenImage(portfolioProjects[projectIndex].images[imageIndex].src);
   };
 
   const closeFullscreen = () => {
     setFullscreenImage(null);
+  };
+
+  const navigateImage = (direction: 'prev' | 'next') => {
+    const currentProject = portfolioProjects[currentProjectIndex];
+    let newImageIndex = currentImageIndex;
+
+    if (direction === 'next') {
+      if (newImageIndex < currentProject.images.length - 1) {
+        newImageIndex++;
+      } else if (currentProjectIndex < portfolioProjects.length - 1) {
+        setCurrentProjectIndex(currentProjectIndex + 1);
+        newImageIndex = 0;
+      }
+    } else {
+      if (newImageIndex > 0) {
+        newImageIndex--;
+      } else if (currentProjectIndex > 0) {
+        setCurrentProjectIndex(currentProjectIndex - 1);
+        newImageIndex = portfolioProjects[currentProjectIndex - 1].images.length - 1;
+      }
+    }
+
+    setCurrentImageIndex(newImageIndex);
+    setFullscreenImage(portfolioProjects[currentProjectIndex].images[newImageIndex].src);
   };
 
   return (
@@ -203,7 +231,7 @@ export default function PortfolioPage() {
         </Button>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mt-8">
-        {portfolioProjects.map(project => (
+        {portfolioProjects.map((project, projectIndex) => (
           <div
             key={project.id}
             className="bg-white rounded-lg shadow-md overflow-hidden"
@@ -211,10 +239,10 @@ export default function PortfolioPage() {
             <div className="p-4">
               <h2 className="text-md font-semibold mb-4">{project.title}</h2>
               <div className="grid grid-cols-2 gap-4">
-                {project.images.map((image, index) => (
+                {project.images.map((image, imageIndex) => (
                   <div
-                    key={index}
-                    onClick={() => openFullscreen(image.src)}
+                    key={imageIndex}
+                    onClick={() => openFullscreen(projectIndex, imageIndex)}
                     className="cursor-pointer"
                   >
                     <Image
@@ -239,12 +267,34 @@ export default function PortfolioPage() {
           className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
           onClick={closeFullscreen}
         >
+          <Button
+            variant="outline"
+            size="icon"
+            className="absolute left-4 z-50"
+            onClick={(e) => {
+              e.stopPropagation();
+              navigateImage('prev');
+            }}
+          >
+            <ChevronLeftIcon className="h-4 w-4" />
+          </Button>
           <Image
             src={fullscreenImage}
             alt="Fullscreen image"
             layout="fill"
             objectFit="contain"
           />
+          <Button
+            variant="outline"
+            size="icon"
+            className="absolute right-4 z-50"
+            onClick={(e) => {
+              e.stopPropagation();
+              navigateImage('next');
+            }}
+          >
+            <ChevronRightIcon className="h-4 w-4" />
+          </Button>
         </div>
       )}
     </div>
