@@ -3,9 +3,11 @@
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { Button } from '../components/ui/button';
-import { ArrowLeftIcon, GitHubLogoIcon, ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
+import { ArrowLeftIcon, GitHubLogoIcon, ChevronLeftIcon, ChevronRightIcon, SunIcon, MoonIcon } from '@radix-ui/react-icons';
+import { useTheme } from 'next-themes';
 
 export default function PortfolioPage() {
+  const { theme, setTheme } = useTheme();
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
   const [currentProjectIndex, setCurrentProjectIndex] = useState<number>(0);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
@@ -243,15 +245,24 @@ export default function PortfolioPage() {
           <ArrowLeftIcon className="h-4 w-4" />
         </Button>
         <h1 className="text-2xl font-bold">My Portfolio</h1>
-        <Button variant="outline" size="icon" className="ml-auto" onClick={() => window.location.href = 'https://github.com/turalowski'}>
-          <GitHubLogoIcon className="h-4 w-4" />
-        </Button>
+        <div className="ml-auto flex gap-3">
+          <Button variant="outline" size="icon" onClick={() => window.location.href = 'https://github.com/turalowski'}>
+            <GitHubLogoIcon className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          >
+            {theme === 'dark' ? <SunIcon className="h-4 w-4" /> : <MoonIcon className="h-4 w-4" />}
+          </Button>
+        </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 mt-8">
         {portfolioProjects.map((project, projectIndex) => (
           <div
             key={project.id}
-            className="bg-white rounded-lg shadow-md overflow-hidden"
+            className="bg-background rounded-lg shadow-md overflow-hidden dark:border dark:border-gray-700"
           >
             <div className="p-4">
               <h2 className="text-md font-semibold mb-4">{project.title}</h2>
@@ -269,7 +280,7 @@ export default function PortfolioPage() {
                       height={75}
                       className="w-full h-12 object-cover object-center transition-transform duration-300 hover:scale-105"
                     />
-                    <p className="text-xs text-gray-600 mt-2">
+                    <p className="text-xs text-muted-foreground mt-2">
                       {image.description}
                     </p>
                   </div>
