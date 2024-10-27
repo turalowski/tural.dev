@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '../components/ui/button';
 import { ArrowLeftIcon, GitHubLogoIcon, ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
 
@@ -218,6 +218,23 @@ export default function PortfolioPage() {
     setCurrentImageIndex(newImageIndex);
     setFullscreenImage(portfolioProjects[currentProjectIndex].images[newImageIndex].src);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!fullscreenImage) return;
+      
+      if (e.key === 'ArrowLeft') {
+        navigateImage('prev');
+      } else if (e.key === 'ArrowRight') {
+        navigateImage('next');
+      } else if (e.key === 'Escape') {
+        closeFullscreen();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [fullscreenImage, currentProjectIndex, currentImageIndex]);
 
   return (
     <div className="container mx-auto px-4 py-8">
