@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={source_code_pro.className}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
