@@ -1,6 +1,6 @@
 'use client';
 
-import { TwitterLogoIcon, GitHubLogoIcon, SunIcon, MoonIcon } from '@radix-ui/react-icons';
+import { TwitterLogoIcon, GitHubLogoIcon} from '@radix-ui/react-icons';
 import { Button } from './components/ui/button';
 import Link from 'next/link';
 import {
@@ -9,10 +9,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from './components/ui/tooltip';
-import { useTheme } from 'next-themes';
 
 export default function Home() {
-  const { theme, setTheme } = useTheme();
 
   return (
     <main className="flex min-h-screen flex-col justify-center items-center p-6">
@@ -61,14 +59,6 @@ export default function Home() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                >
-                  {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
-                  <span className="sr-only">Toggle theme</span>
-                </Button>
               </TooltipTrigger>
               <TooltipContent>Toggle theme</TooltipContent>
             </Tooltip>

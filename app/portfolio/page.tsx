@@ -11,10 +11,8 @@ import {
   SunIcon,
   MoonIcon,
 } from '@radix-ui/react-icons';
-import { useTheme } from 'next-themes';
 
 export default function PortfolioPage() {
-  const { theme, setTheme } = useTheme();
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
   const [currentProjectIndex, setCurrentProjectIndex] = useState<number>(0);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
@@ -286,17 +284,6 @@ export default function PortfolioPage() {
             }
           >
             <GitHubLogoIcon className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          >
-            {theme === 'dark' ? (
-              <SunIcon className="h-4 w-4" />
-            ) : (
-              <MoonIcon className="h-4 w-4" />
-            )}
           </Button>
         </div>
       </div>
