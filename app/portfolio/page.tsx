@@ -320,7 +320,9 @@ export default function PortfolioPage() {
                       alt={`${project.title} - ${image.description}`}
                       width={100}
                       height={75}
-                      className="w-full h-12 object-cover object-center transition-transform duration-300 hover:scale-105"
+                      objectFit="cover"
+                      objectPosition="center"
+                      className="w-full h-12 transition-transform duration-300 hover:scale-105"
                     />
                     <p className="text-xs text-muted-foreground mt-2">
                       {image.description}
