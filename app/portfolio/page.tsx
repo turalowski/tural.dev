@@ -3,7 +3,14 @@
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { Button } from '../components/ui/button';
-import { ArrowLeftIcon, GitHubLogoIcon, ChevronLeftIcon, ChevronRightIcon, SunIcon, MoonIcon } from '@radix-ui/react-icons';
+import {
+  ArrowLeftIcon,
+  GitHubLogoIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  SunIcon,
+  MoonIcon,
+} from '@radix-ui/react-icons';
 import { useTheme } from 'next-themes';
 
 export default function PortfolioPage() {
@@ -22,7 +29,7 @@ export default function PortfolioPage() {
         },
         {
           src: '/images/technote/main-light.png',
-          description: 'Home Page (Light Theme)', 
+          description: 'Home Page (Light Theme)',
         },
         {
           src: '/images/technote/post-dark.png',
@@ -158,28 +165,28 @@ export default function PortfolioPage() {
         },
       ],
     },
-    {
-      id: 7,
-      title: 'Tender',
-      images: [
-        {
-          src: '/images/tender/home.png',
-          description: 'Landing Page',
-        },
-        {
-          src: '/images/tender/categories.png',
-          description: 'Browse Categories',
-        },
-        {
-          src: '/images/tender/about-tender.png',
-          description: 'About Us',
-        },
-        {
-          src: '/images/tender/create-tender.png',
-          description: 'New Tender Form',
-        },
-      ],
-    },
+    // {
+    //   id: 7,
+    //   title: 'Tender',
+    //   images: [
+    //     {
+    //       src: '/images/tender/home.png',
+    //       description: 'Landing Page',
+    //     },
+    //     {
+    //       src: '/images/tender/categories.png',
+    //       description: 'Browse Categories',
+    //     },
+    //     {
+    //       src: '/images/tender/about-tender.png',
+    //       description: 'About Us',
+    //     },
+    //     {
+    //       src: '/images/tender/create-tender.png',
+    //       description: 'New Tender Form',
+    //     },
+    //   ],
+    // },
     {
       id: 8,
       title: 'Email Archive',
@@ -231,18 +238,21 @@ export default function PortfolioPage() {
         newImageIndex--;
       } else if (currentProjectIndex > 0) {
         setCurrentProjectIndex(currentProjectIndex - 1);
-        newImageIndex = portfolioProjects[currentProjectIndex - 1].images.length - 1;
+        newImageIndex =
+          portfolioProjects[currentProjectIndex - 1].images.length - 1;
       }
     }
 
     setCurrentImageIndex(newImageIndex);
-    setFullscreenImage(portfolioProjects[currentProjectIndex].images[newImageIndex].src);
+    setFullscreenImage(
+      portfolioProjects[currentProjectIndex].images[newImageIndex].src
+    );
   };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!fullscreenImage) return;
-      
+
       if (e.key === 'ArrowLeft') {
         navigateImage('prev');
       } else if (e.key === 'ArrowRight') {
@@ -259,12 +269,22 @@ export default function PortfolioPage() {
   return (
     <div className="min-h-screen container mx-auto px-4 py-8">
       <div className="flex items-center gap-3">
-        <Button variant="outline" size="icon" onClick={() => window.location.href = '/'}>
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => (window.location.href = '/')}
+        >
           <ArrowLeftIcon className="h-4 w-4" />
         </Button>
         <h1 className="text-2xl font-bold">My Portfolio</h1>
         <div className="ml-auto flex gap-3">
-          <Button variant="outline" size="icon" onClick={() => window.location.href = 'https://github.com/turalowski'}>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() =>
+              (window.location.href = 'https://github.com/turalowski')
+            }
+          >
             <GitHubLogoIcon className="h-4 w-4" />
           </Button>
           <Button
@@ -272,7 +292,11 @@ export default function PortfolioPage() {
             size="icon"
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
           >
-            {theme === 'dark' ? <SunIcon className="h-4 w-4" /> : <MoonIcon className="h-4 w-4" />}
+            {theme === 'dark' ? (
+              <SunIcon className="h-4 w-4" />
+            ) : (
+              <MoonIcon className="h-4 w-4" />
+            )}
           </Button>
         </div>
       </div>
@@ -317,7 +341,7 @@ export default function PortfolioPage() {
             variant="outline"
             size="icon"
             className="absolute left-4 z-50"
-            onClick={(e) => {
+            onClick={e => {
               e.stopPropagation();
               navigateImage('prev');
             }}
@@ -334,7 +358,7 @@ export default function PortfolioPage() {
             variant="outline"
             size="icon"
             className="absolute right-4 z-50"
-            onClick={(e) => {
+            onClick={e => {
               e.stopPropagation();
               navigateImage('next');
             }}
