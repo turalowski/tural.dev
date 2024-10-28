@@ -20,10 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={source_code_pro.className}>
         <ThemeProvider
-          attribute="class"
           defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
         >
           {children}
         </ThemeProvider>

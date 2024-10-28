@@ -10,7 +10,14 @@ import {
   ChevronRightIcon,
   SunIcon,
   MoonIcon,
+  InfoCircledIcon,
 } from '@radix-ui/react-icons';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@radix-ui/react-tooltip';
 
 export default function PortfolioPage() {
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
