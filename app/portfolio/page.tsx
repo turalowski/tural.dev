@@ -309,15 +309,14 @@ export default function PortfolioPage() {
                     onClick={() => openFullscreen(projectIndex, imageIndex)}
                     className="cursor-pointer"
                   >
-                    <Image
-                      src={image.src}
-                      alt={`${project.title} - ${image.description}`}
-                      width={100}
-                      height={75}
-                      objectFit="cover"
-                      objectPosition="center"
-                      className="w-full h-12 transition-transform duration-300 hover:scale-105"
-                    />
+                    <div className="relative w-full h-12">
+                      <Image
+                        src={image.src}
+                        alt={`${project.title} - ${image.description}`}
+                        fill
+                        className="object-cover transition-transform duration-300 hover:scale-105"
+                      />
+                    </div>
                     <p className="text-xs text-muted-foreground mt-2">
                       {image.description}
                     </p>
