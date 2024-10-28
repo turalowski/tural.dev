@@ -35,6 +35,24 @@ export default function PortfolioPage() {
       ],
     },
     {
+      id: 5.5,
+      title: 'Job Searching Platform',
+      images: [
+        {
+          src: '/images/projobs/main.png',
+          description: 'Homepage',
+        },
+        {
+          src: '/images/projobs/jobs.png',
+          description: 'Jobs Listing',
+        },
+        {
+          src: '/images/projobs/job-detail.png',
+          description: 'Job Details',
+        },
+      ],
+    },
+    {
       id: 2,
       title: 'Prospect SMB - Contacts Module',
       images: [
@@ -239,7 +257,7 @@ export default function PortfolioPage() {
   }, [fullscreenImage, currentProjectIndex, currentImageIndex]);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen container mx-auto px-4 py-8">
       <div className="flex items-center gap-3">
         <Button variant="outline" size="icon" onClick={() => window.location.href = '/'}>
           <ArrowLeftIcon className="h-4 w-4" />
