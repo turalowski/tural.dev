@@ -14,7 +14,7 @@ export default function PortfolioPage() {
   const portfolioProjects = [
     {
       id: 1,
-      title: 'Technote Media (Frontend)',
+      title: 'Technote Media',
       images: [
         {
           src: '/images/technote/main-dark.png',
