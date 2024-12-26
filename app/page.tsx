@@ -1,8 +1,9 @@
 'use client';
 
-import { TwitterLogoIcon, GitHubLogoIcon} from '@radix-ui/react-icons';
+import { GitHubLogoIcon, FileTextIcon } from '@radix-ui/react-icons';
 import { Button } from './components/ui/button';
 import Link from 'next/link';
+import ToggleAppearance from './components/toggle-appearance';
 import {
   Tooltip,
   TooltipContent,
@@ -11,7 +12,6 @@ import {
 } from './components/ui/tooltip';
 
 export default function Home() {
-
   return (
     <main className="flex min-h-screen flex-col justify-center items-center p-6">
       <div className="flex flex-col items-center gap-3">
@@ -33,6 +33,19 @@ export default function Home() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
+                <Link href="/blog">
+                  <Button variant="outline" size="icon">
+                    <FileTextIcon />
+                    <span className="sr-only">Blog</span>
+                  </Button>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>Blog</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
                 <Link href="/portfolio">
                   <Button variant="outline" size="icon">
                     <span>📁</span>
@@ -43,26 +56,7 @@ export default function Home() {
               <TooltipContent>Portfolio</TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link target="_blank" href="https://twitter.com/turalowski">
-                  <Button variant="outline" size="icon">
-                    <TwitterLogoIcon />
-                    <span className="sr-only">Twitter</span>
-                  </Button>
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent>Twitter</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-              </TooltipTrigger>
-              <TooltipContent>Toggle theme</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <ToggleAppearance />
         </div>
       </div>
     </main>
