@@ -1,13 +1,13 @@
-"use client";
-
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/app/components/ui/button";
 import { ArrowLeftIcon, HomeIcon } from "@radix-ui/react-icons";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { useEffect, useState } from "react";
 import matter from "gray-matter";
+import fs from "fs";
+import path from "path";
+import { Metadata } from "next";
 
 interface BlogPostPageProps {
   params: {
@@ -23,54 +23,58 @@ interface PostData {
   content: string;
 }
 
-export default function BlogPostPage({ params }: BlogPostPageProps) {
-  const [postData, setPostData] = useState<PostData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function loadContent() {
-      try {
-        setIsLoading(true);
-        setError(null);
-        const response = await fetch(`/blog/posts/${params.slug}.md`);
-        if (!response.ok) {
-          throw new Error('Failed to load post content');
-        }
-        const text = await response.text();
-        const { data, content } = matter(text);
-        setPostData({
-          title: data.title,
-          date: data.date,
-          tags: data.tags,
-          excerpt: data.excerpt,
-          content
-        });
-      } catch (error) {
-        console.error('Failed to load post content:', error);
-        setError('Failed to load post content. Please try again later.');
-      } finally {
-        setIsLoading(false);
-      }
-    }
+async function getPostData(slug: string): Promise<PostData | null> {
+  try {
+    const filePath = path.join(process.cwd(), "public", "blog", "posts", `${slug}.md`);
+    const fileContent = fs.readFileSync(filePath, "utf8");
+    const { data, content } = matter(fileContent);
     
-    loadContent();
-  }, [params.slug]);
+    return {
+      title: data.title,
+      date: data.date,
+      tags: data.tags,
+      excerpt: data.excerpt,
+      content
+    };
+  } catch (error) {
+    console.error('Failed to load post content:', error);
+    return null;
+  }
+}
 
-  if (isLoading) {
-    return (
-      <div className="container mx-auto px-4 py-6 max-w-2xl">
-        <div className="text-muted-foreground">Loading...</div>
-      </div>
-    );
+export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+  const postData = await getPostData(params.slug);
+
+  if (!postData) {
+    return {
+      title: "Post Not Found",
+    };
   }
 
-  if (error || !postData) {
-    return (
-      <div className="container mx-auto px-4 py-6 max-w-2xl">
-        <div className="text-red-500">{error || 'Post not found'}</div>
-      </div>
-    );
+  return {
+    title: postData.title,
+    description: postData.excerpt,
+    keywords: postData.tags,
+    openGraph: {
+      title: postData.title,
+      description: postData.excerpt,
+      type: "article",
+      publishedTime: postData.date,
+      tags: postData.tags,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: postData.title,
+      description: postData.excerpt,
+    },
+  };
+}
+
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const postData = await getPostData(params.slug);
+
+  if (!postData) {
+    notFound();
   }
 
   return (
