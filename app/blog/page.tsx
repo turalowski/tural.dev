@@ -1,12 +1,33 @@
-"use client";
-
 import Link from "next/link";
 import { Button } from "../components/ui/button";
 import { Badge } from "../components/ui/badge";
 import { GitHubLogoIcon, HomeIcon } from "@radix-ui/react-icons";
 import ToggleAppearance from "../components/toggle-appearance";
-import { useEffect, useState } from "react";
 import matter from "gray-matter";
+import { promises as fs } from "fs";
+import path from "path";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Blog | Tural Hajiyev",
+  description: "Həvəs üçün yazdığım yazılar.",
+  keywords: ["blog", "frontend", "development", "general", "ideas"],
+  authors: [{ name: "Tural Hajiyev" }],
+  creator: "Tural Hajiyev",
+  openGraph: {
+    title: "Blog | Tural Hajiyev",
+    description: "Həvəs üçün yazdığım yazılar.",
+    type: "website",
+    locale: "az_AZ",
+    siteName: "Tural Hajiyev",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blog | Tural Hajiyev",
+    description: "Həvəs üçün yazdığım yazılar.",
+    creator: "@turalowski",
+  },
+};
 
 interface Post {
   slug: string;
@@ -16,66 +37,40 @@ interface Post {
   tags: string[];
 }
 
-export default function BlogPage() {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function loadPosts() {
-      try {
-        setIsLoading(true);
-        setError(null);
-        
-        // For now, we'll hardcode the slugs since we can't list directory contents client-side
-        const slugs = ['getting-started-with-nextjs', 'mastering-typescript'];
-        const loadedPosts = await Promise.all(
-          slugs.map(async (slug) => {
-            const response = await fetch(`/blog/posts/${slug}.md`);
-            const text = await response.text();
-            const { data } = matter(text);
-            return {
-              slug,
-              title: data.title,
-              excerpt: data.excerpt,
-              date: data.date,
-              tags: data.tags
-            };
-          })
-        );
-
-        // Sort posts by date
-        const sortedPosts = loadedPosts.sort((a, b) => 
-          new Date(b.date).getTime() - new Date(a.date).getTime()
-        );
-
-        setPosts(sortedPosts);
-      } catch (error) {
-        console.error('Failed to load posts:', error);
-        setError('Failed to load posts. Please try again later.');
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    loadPosts();
-  }, []);
-
-  if (isLoading) {
-    return (
-      <div className="container mx-auto px-4 py-6 max-w-2xl">
-        <div className="text-muted-foreground">Loading posts...</div>
-      </div>
+async function getPosts(): Promise<Post[]> {
+  try {
+    const postsDirectory = path.join(process.cwd(), "public/blog/posts");
+    const slugs = ['saatlar'];
+    
+    const loadedPosts = await Promise.all(
+      slugs.map(async (slug) => {
+        const filePath = path.join(postsDirectory, `${slug}.md`);
+        const fileContents = await fs.readFile(filePath, "utf8");
+        const { data } = matter(fileContents);
+        return {
+          slug,
+          title: data.title,
+          excerpt: data.excerpt,
+          date: data.date,
+          tags: data.tags
+        };
+      })
     );
-  }
 
-  if (error) {
-    return (
-      <div className="container mx-auto px-4 py-6 max-w-2xl">
-        <div className="text-red-500">{error}</div>
-      </div>
+    // Sort posts by date
+    const sortedPosts = loadedPosts.sort((a, b) => 
+      new Date(b.date).getTime() - new Date(a.date).getTime()
     );
+
+    return sortedPosts;
+  } catch (error) {
+    console.error('Failed to load posts:', error);
+    return [];
   }
+}
+
+export default async function BlogPage() {
+  const posts = await getPosts();
 
   return (
     <div className="container mx-auto px-4 py-6 max-w-2xl">

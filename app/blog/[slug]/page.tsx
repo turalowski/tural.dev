@@ -123,6 +123,11 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                 {children}
               </code>
             ),
+            blockquote: ({ children }) => (
+              <blockquote className="border-l-4 border-muted-foreground/30 pl-4 py-2 mb-4 italic text-muted-foreground">
+                {children}
+              </blockquote>
+            ),
             pre: ({ children }) => (
               <pre className="bg-muted p-4 rounded-lg overflow-x-auto mb-4 text-sm">
                 {children}
