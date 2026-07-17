@@ -40,8 +40,8 @@ interface Post {
 async function getPosts(): Promise<Post[]> {
   try {
     const postsDirectory = path.join(process.cwd(), "public/blog/posts");
-    const slugs = ['saatlar'];
-    
+    const slugs: string[] = [];
+
     const loadedPosts = await Promise.all(
       slugs.map(async (slug) => {
         const filePath = path.join(postsDirectory, `${slug}.md`);
@@ -52,19 +52,19 @@ async function getPosts(): Promise<Post[]> {
           title: data.title,
           excerpt: data.excerpt,
           date: data.date,
-          tags: data.tags
+          tags: data.tags,
         };
-      })
+      }),
     );
 
     // Sort posts by date
-    const sortedPosts = loadedPosts.sort((a, b) => 
-      new Date(b.date).getTime() - new Date(a.date).getTime()
+    const sortedPosts = loadedPosts.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     );
 
     return sortedPosts;
   } catch (error) {
-    console.error('Failed to load posts:', error);
+    console.error("Failed to load posts:", error);
     return [];
   }
 }
@@ -83,7 +83,9 @@ export default async function BlogPage() {
         </Link>
       </div>
       <div className="mb-8 text-center">
-        <h1 className="text-3xl font-bold mb-2 text-foreground">Tural Hajiyev</h1>
+        <h1 className="text-3xl font-bold mb-2 text-foreground">
+          Tural Hajiyev
+        </h1>
         <p className="text-lg text-muted-foreground mb-3">Frontend Engineer</p>
         <div className="flex justify-center gap-3">
           <Link
@@ -116,16 +118,20 @@ export default async function BlogPage() {
                 </p>
                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-xs text-muted-foreground">
                   <time dateTime={post.date} className="shrink-0">
-                    {new Date(post.date).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
+                    {new Date(post.date).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
                     })}
                   </time>
                   <span className="hidden sm:inline">•</span>
                   <div className="flex flex-wrap gap-1.5">
                     {post.tags.map((tag) => (
-                      <Badge key={tag} variant="secondary" className="text-[10px] px-2 py-0">
+                      <Badge
+                        key={tag}
+                        variant="secondary"
+                        className="text-[10px] px-2 py-0"
+                      >
                         {tag}
                       </Badge>
                     ))}
@@ -138,4 +144,4 @@ export default async function BlogPage() {
       </div>
     </div>
   );
-} 
+}
