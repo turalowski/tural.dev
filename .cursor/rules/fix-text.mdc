@@ -1,0 +1,15 @@
+---
+description: Apply house text style when writing or editing prose in this repo.
+globs: public/blog/posts/**/*.{md,mdx},app/**/*.{tsx,ts,jsx,js}
+alwaysApply: false
+---
+
+# Fix Text
+
+When writing or editing user-facing copy, follow the **fix-text** skill at `.cursor/skills/fix-text/SKILL.md`.
+
+Current hard rules (see the skill for the full list and future additions):
+
+- Tone: share opinion from issues faced, not teach/lecture
+- No em dashes, en dashes, or spaced hyphen asides
+- Use straight `'` only, never curly apostrophes

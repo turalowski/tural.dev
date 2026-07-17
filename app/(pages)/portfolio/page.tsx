@@ -1,23 +1,14 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { useState, useEffect } from 'react';
-import { Button } from '../components/ui/button';
+import Image from "next/image";
+import { useState, useEffect } from "react";
+import { Button } from "@/app/components/ui/button";
 import {
   ArrowLeftIcon,
   GitHubLogoIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
-  SunIcon,
-  MoonIcon,
-  InfoCircledIcon,
-} from '@radix-ui/react-icons';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@radix-ui/react-tooltip';
+} from "@radix-ui/react-icons";
 
 export default function PortfolioPage() {
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
@@ -26,195 +17,150 @@ export default function PortfolioPage() {
   const portfolioProjects = [
     {
       id: 1,
-      title: 'Technote Media',
+      title: "Technote Media",
       images: [
         {
-          src: '/images/technote/main-dark.png',
-          description: 'Home Page (Dark Theme)',
+          src: "/images/technote/main-dark.png",
+          description: "Home Page (Dark Theme)",
         },
         {
-          src: '/images/technote/main-light.png',
-          description: 'Home Page (Light Theme)',
+          src: "/images/technote/main-light.png",
+          description: "Home Page (Light Theme)",
         },
         {
-          src: '/images/technote/post-dark.png',
-          description: 'Blog Post (Dark Theme)',
+          src: "/images/technote/post-dark.png",
+          description: "Blog Post (Dark Theme)",
         },
         {
-          src: '/images/technote/post-light.png',
-          description: 'Blog Post (Light Theme)',
+          src: "/images/technote/post-light.png",
+          description: "Blog Post (Light Theme)",
         },
       ],
     },
     {
       id: 5.5,
-      title: 'Job Searching Platform',
+      title: "Job Searching Platform",
       images: [
         {
-          src: '/images/projobs/main.png',
-          description: 'Homepage',
+          src: "/images/projobs/main.png",
+          description: "Homepage",
         },
         {
-          src: '/images/projobs/jobs.png',
-          description: 'Jobs Listing',
+          src: "/images/projobs/jobs.png",
+          description: "Jobs Listing",
         },
         {
-          src: '/images/projobs/job-detail.png',
-          description: 'Job Details',
+          src: "/images/projobs/job-detail.png",
+          description: "Job Details",
         },
       ],
     },
     {
       id: 2,
-      title: 'Prospect SMB - Contacts Module',
+      title: "Prospect SMB - Contacts Module",
       images: [
         {
-          src: '/images/prospect/contacts/contacts.png',
-          description: 'Contacts Dashboard',
+          src: "/images/prospect/contacts/contacts.png",
+          description: "Contacts Dashboard",
         },
         {
-          src: '/images/prospect/contacts/new-contact.png',
-          description: 'Create Contact Form',
+          src: "/images/prospect/contacts/new-contact.png",
+          description: "Create Contact Form",
         },
         {
-          src: '/images/prospect/contacts/partners.png',
-          description: 'Partners List',
+          src: "/images/prospect/contacts/partners.png",
+          description: "Partners List",
         },
         {
-          src: '/images/prospect/contacts/new-partner.png',
-          description: 'Create Partner Form',
+          src: "/images/prospect/contacts/new-partner.png",
+          description: "Create Partner Form",
         },
       ],
     },
     {
       id: 3,
-      title: 'Prospect SMB - Orders Module',
+      title: "Prospect SMB - Orders Module",
       images: [
         {
-          src: '/images/prospect/orders-module/list-of-goods.png',
-          description: 'Products Catalog',
+          src: "/images/prospect/orders-module/list-of-goods.png",
+          description: "Products Catalog",
         },
         {
-          src: '/images/prospect/orders-module/orders.jpg',
-          description: 'Orders Dashboard',
+          src: "/images/prospect/orders-module/orders.jpg",
+          description: "Orders Dashboard",
         },
         {
-          src: '/images/prospect/orders-module/detail.png',
-          description: 'Order Information',
+          src: "/images/prospect/orders-module/detail.png",
+          description: "Order Information",
         },
         {
-          src: '/images/prospect/orders-module/timeline.png',
-          description: 'Order Status Timeline',
+          src: "/images/prospect/orders-module/timeline.png",
+          description: "Order Status Timeline",
         },
       ],
     },
     {
       id: 4,
-      title: 'Prospect SMB - Sales Module',
+      title: "Prospect SMB - Sales Module",
       images: [
         {
-          src: '/images/prospect/sales/sales.jpg',
-          description: 'Sales Dashboard',
+          src: "/images/prospect/sales/sales.jpg",
+          description: "Sales Dashboard",
         },
         {
-          src: '/images/prospect/sales/new-operation.png',
-          description: 'Create Sale',
+          src: "/images/prospect/sales/new-operation.png",
+          description: "Create Sale",
         },
         {
-          src: '/images/prospect/sales/detail.png',
-          description: 'Sale Details',
+          src: "/images/prospect/sales/detail.png",
+          description: "Sale Details",
         },
         {
-          src: '/images/prospect/sales/invoice-content.png',
-          description: 'Invoice Preview',
+          src: "/images/prospect/sales/invoice-content.png",
+          description: "Invoice Preview",
         },
       ],
     },
     {
       id: 5,
-      title: 'Prospect SMB - Reports Module',
+      title: "Prospect SMB - Reports Module",
       images: [
         {
-          src: '/images/prospect/reports/sales-reports.png',
-          description: 'Sales Analytics',
+          src: "/images/prospect/reports/sales-reports.png",
+          description: "Sales Analytics",
         },
         {
-          src: '/images/prospect/reports/turnover.png',
-          description: 'Revenue Overview',
+          src: "/images/prospect/reports/turnover.png",
+          description: "Revenue Overview",
         },
         {
-          src: '/images/prospect/reports/balance-sheet.png',
-          description: 'Balance Sheet',
+          src: "/images/prospect/reports/balance-sheet.png",
+          description: "Balance Sheet",
         },
         {
-          src: '/images/prospect/reports/balance-sheet-range.png',
-          description: 'Custom Date Range',
+          src: "/images/prospect/reports/balance-sheet-range.png",
+          description: "Custom Date Range",
         },
       ],
     },
     {
       id: 6,
-      title: '10BE5 - Landing Page',
+      title: "10BE5 - Landing Page",
       images: [
         {
-          src: '/images/10be5/home.png',
-          description: 'Welcome Page',
+          src: "/images/10be5/home.png",
+          description: "Welcome Page",
         },
         {
-          src: '/images/10be5/product.png',
-          description: 'Product Details',
+          src: "/images/10be5/product.png",
+          description: "Product Details",
         },
         {
-          src: '/images/10be5/contact.png',
-          description: 'Get in Touch',
+          src: "/images/10be5/contact.png",
+          description: "Get in Touch",
         },
       ],
     },
-    // {
-    //   id: 7,
-    //   title: 'Tender',
-    //   images: [
-    //     {
-    //       src: '/images/tender/home.png',
-    //       description: 'Landing Page',
-    //     },
-    //     {
-    //       src: '/images/tender/categories.png',
-    //       description: 'Browse Categories',
-    //     },
-    //     {
-    //       src: '/images/tender/about-tender.png',
-    //       description: 'About Us',
-    //     },
-    //     {
-    //       src: '/images/tender/create-tender.png',
-    //       description: 'New Tender Form',
-    //     },
-    //   ],
-    // },
-    {
-      id: 8,
-      title: 'Email Archive',
-      images: [
-        {
-          src: '/images/tolq/main.png',
-          description: 'Email Inbox',
-        },
-        {
-          src: '/images/tolq/archive.png',
-          description: 'Archived Emails',
-        },
-        {
-          src: '/images/tolq/content.png',
-          description: 'Email Content',
-        },
-        {
-          src: '/images/tolq/forward-email.png',
-          description: 'Forward Message',
-        },
-      ],
-    },
-    // Add more projects as needed
   ];
 
   const openFullscreen = (projectIndex: number, imageIndex: number) => {
@@ -227,11 +173,11 @@ export default function PortfolioPage() {
     setFullscreenImage(null);
   };
 
-  const navigateImage = (direction: 'prev' | 'next') => {
+  const navigateImage = (direction: "prev" | "next") => {
     const currentProject = portfolioProjects[currentProjectIndex];
     let newImageIndex = currentImageIndex;
 
-    if (direction === 'next') {
+    if (direction === "next") {
       if (newImageIndex < currentProject.images.length - 1) {
         newImageIndex++;
       } else if (currentProjectIndex < portfolioProjects.length - 1) {
@@ -250,7 +196,7 @@ export default function PortfolioPage() {
 
     setCurrentImageIndex(newImageIndex);
     setFullscreenImage(
-      portfolioProjects[currentProjectIndex].images[newImageIndex].src
+      portfolioProjects[currentProjectIndex].images[newImageIndex].src,
     );
   };
 
@@ -258,17 +204,17 @@ export default function PortfolioPage() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!fullscreenImage) return;
 
-      if (e.key === 'ArrowLeft') {
-        navigateImage('prev');
-      } else if (e.key === 'ArrowRight') {
-        navigateImage('next');
-      } else if (e.key === 'Escape') {
+      if (e.key === "ArrowLeft") {
+        navigateImage("prev");
+      } else if (e.key === "ArrowRight") {
+        navigateImage("next");
+      } else if (e.key === "Escape") {
         closeFullscreen();
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [fullscreenImage, currentProjectIndex, currentImageIndex]);
 
   return (
@@ -277,7 +223,7 @@ export default function PortfolioPage() {
         <Button
           variant="outline"
           size="icon"
-          onClick={() => (window.location.href = '/')}
+          onClick={() => (window.location.href = "/")}
         >
           <ArrowLeftIcon className="h-4 w-4" />
         </Button>
@@ -287,7 +233,7 @@ export default function PortfolioPage() {
             variant="outline"
             size="icon"
             onClick={() =>
-              (window.location.href = 'https://github.com/turalowski')
+              (window.location.href = "https://github.com/turalowski")
             }
           >
             <GitHubLogoIcon className="h-4 w-4" />
@@ -336,9 +282,9 @@ export default function PortfolioPage() {
             variant="outline"
             size="icon"
             className="absolute left-4 z-50"
-            onClick={e => {
+            onClick={(e) => {
               e.stopPropagation();
-              navigateImage('prev');
+              navigateImage("prev");
             }}
           >
             <ChevronLeftIcon className="h-4 w-4" />
@@ -353,9 +299,9 @@ export default function PortfolioPage() {
             variant="outline"
             size="icon"
             className="absolute right-4 z-50"
-            onClick={e => {
+            onClick={(e) => {
               e.stopPropagation();
-              navigateImage('next');
+              navigateImage("next");
             }}
           >
             <ChevronRightIcon className="h-4 w-4" />
