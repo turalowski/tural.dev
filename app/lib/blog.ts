@@ -19,7 +19,6 @@ export interface BlogPostMeta {
   tags: string[];
   author: string;
   image?: string;
-  draft: boolean;
   canonical?: string;
   locale: string;
   category?: string;
@@ -41,8 +40,6 @@ function parseFrontmatter(
   slug: string,
   data: Record<string, unknown>,
 ): BlogPostMeta | null {
-  if (data.draft === true) return null;
-
   const title = typeof data.title === "string" ? data.title : null;
   const excerpt = typeof data.excerpt === "string" ? data.excerpt : null;
   const date = typeof data.date === "string" ? data.date : null;
@@ -63,15 +60,11 @@ function parseFrontmatter(
     date,
     updated: typeof data.updated === "string" ? data.updated : undefined,
     tags,
-    author:
-      typeof data.author === "string" ? data.author : DEFAULT_AUTHOR,
+    author: typeof data.author === "string" ? data.author : DEFAULT_AUTHOR,
     image: typeof data.image === "string" ? data.image : undefined,
-    draft: false,
-    canonical:
-      typeof data.canonical === "string" ? data.canonical : undefined,
+    canonical: typeof data.canonical === "string" ? data.canonical : undefined,
     locale: typeof data.locale === "string" ? data.locale : "en",
-    category:
-      typeof data.category === "string" ? data.category : undefined,
+    category: typeof data.category === "string" ? data.category : undefined,
   };
 }
 
@@ -138,9 +131,7 @@ export function getAllPosts(): BlogPostMeta[] {
       return meta;
     })
     .filter((post): post is BlogPostMeta => post !== null)
-    .sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-    );
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 export function buildBlogPostingJsonLd(post: BlogPostMeta) {
@@ -153,7 +144,9 @@ export function buildBlogPostingJsonLd(post: BlogPostMeta) {
     headline: post.title,
     description: post.description,
     datePublished: post.date,
-    ...(post.updated ? { dateModified: post.updated } : { dateModified: post.date }),
+    ...(post.updated
+      ? { dateModified: post.updated }
+      : { dateModified: post.date }),
     author: {
       "@type": "Person",
       name: post.author,

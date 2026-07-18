@@ -12,15 +12,6 @@ tags:
 author: "Tural Hajiyev"
 locale: "en" # "en" → en_US, "az" → az_AZ
 category: "Engineering"
-draft: false # true → excluded from listing, sitemap, and static params
-# description: "Optional meta description if different from excerpt."
-# image: "/blog/images/your-slug-cover.jpg" # 1200×630; enables summary_large_image cards
-# updated: "2026-07-17" # Set when you materially revise the post
-# canonical: "https://tural.dev/blog/your-slug" # Only if republished elsewhere
-
-# Filename = URL slug (lowercase kebab-case):
-#   public/blog/posts/my-post-title.md  →  /blog/my-post-title
-# Files starting with _ are ignored. No need to register the slug manually.
 ---
 
 Open with the problem or claim in the first paragraph. Search engines and readers both weight the start heavily — don't bury the point under context.

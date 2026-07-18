@@ -2,10 +2,6 @@
 title: "Monolith, Monorepo, or Microfrontends? What these mean and what they actually fix"
 excerpt: "Spoiler alert: You probably don't need microfrontends unless your org chart looks like a subway map. Monoliths work, monorepos are tidy, and microfrontends... Well, after working at five different companies, I've seen lots of people suggest them, but whenever I asked what real benefits we'd get, the room got pretty quiet."
 date: "2026-07-16"
-author: "Tural Hajiyev"
-locale: "en"
-category: "Engineering"
-draft: false
 tags:
   [
     "Architecture",
@@ -15,6 +11,9 @@ tags:
     "Web Development",
     "Team Productivity",
   ]
+author: "Tural Hajiyev"
+locale: "en"
+category: "Frontend Architecture"
 ---
 
 Last 10 years I've heard "let's split this up into microfrontends" or "a monorepo would solve our problems" countless times. But whenever it's time to push the details, nobody can really point to what problems we're actually solving. I've read article after article on the topic, and honestly, it gets exhausting. "If you want to split the login page and the main page between different teams..." Hold on, do we really need a special task force just to manage a login page? Till now, in all applications I worked, we built-in login page once, and never open that file again. That's pretty much why I built a little demo app with all these different setups, just to see for myself what actually works and what doesn't.

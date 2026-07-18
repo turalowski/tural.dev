@@ -14,6 +14,7 @@ import {
   SITE_NAME,
   TWITTER_HANDLE,
 } from "@/app/lib/blog";
+import ToggleAppearance from "@/app/components/toggle-appearance";
 
 interface BlogPostPageProps {
   params: {
@@ -115,6 +116,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <ArrowLeftIcon className="mr-2 h-4 w-4" />
           Back to all posts
         </Link>
+
+        <ToggleAppearance />
       </div>
       <header>
         <h1 className="text-2xl font-bold mb-2 text-foreground">
@@ -203,6 +206,24 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           {post.content}
         </ReactMarkdown>
       </div>
+      <footer className="mt-10 border-t pt-6 text-xs text-center text-muted-foreground">
+        <p>
+          <span role="img" aria-label="robot">
+            🤖
+          </span>{" "}
+          This article may use AI assistance to fix typos and improve the
+          organization of sections, but all content and ideas are the brain
+          product of the original author.{" "}
+          <a
+            href="https://github.com/turalowski"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ml-1 underline"
+          >
+            github.com/turalowski
+          </a>
+        </p>
+      </footer>
     </article>
   );
 }
