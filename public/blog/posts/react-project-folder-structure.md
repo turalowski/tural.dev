@@ -24,7 +24,7 @@ Picking the right folder structure for teams is one of the first choices a team 
 
 While writing this article, I also wanted to include Atomic Design, but then I realized it's not really a folder structure. It's a great example of how UI libraries can be organized, but the biggest blind spot of Atomic Design is that it wasn't designed for data or logic. It says nothing about where API calls, hooks, or business logic go. Atomic Design was created purely for UI composition, not for handling data or application logic. It can be used together with all folder structures, but alone it can't help to create a full frontend application. Maybe that's not really a blind spot and it's just a different topic and worth addressing separately in another article.
 
-To make things easy to understand, I will mention an ERP application with **contacts**, **finance**, and **hr** modules. I will mention this application in multiple places.
+To make things easy to understand, I will mention an ERP application with **contacts**, **trade**, **finance**, and **hr** modules. I will mention this application in multiple places.
 
 ## Type-based folder structure
 
@@ -99,54 +99,65 @@ Feature-Sliced Design is aimed to fix these concerns.
 ```
 app/          — app setup: root files, providers, environment setup, global styles, routing
 pages/        — route boundaries, page-level compositions (often 1:1 with routes)
-widgets/      — composite UI blocks, each bundling multiple features/entities for a single piece of the UI (e.g. DashboardWidget)
-features/     — user-driven interactions or isolated complex logic ("add-to-cart", "login-form")
-entities/     — business objects/entities, reused in features/widgets ("user", "todo")
+widgets/      — composite UI blocks, each bundling multiple features/entities for a single piece of the UI (e.g. ContactsTableWidget, TradeOverviewWidget)
+features/     — user-driven interactions or isolated complex logic (e.g. "add-contact", "create-trade", "submit-expense-report", "hire-employee")
+entities/     — business domain objects/entities, reused in features/widgets (e.g. "contact", "trade", "finance", "employee")
 shared/       — truly generic or cross-cutting code (UI kit, utilities, config, API base)
 ```
 
 Feature-Sliced Design (often shortened to FSD) is a modern approach to scalable frontend architecture that builds on lessons from both type-based and feature-based structures. It's pretty new, but on their website there are many example applications already using this folder structure. It introduces new terms such as layers, slices and segments.
 
-The motivation of feature-sliced design is to organize the code into layers, each with its own responsibility and strict import rules. Higher layers can depend only on lower ones, not the other way around. Basically you can import something from the entities folder in features, but you can't import something from the features folder in entities. Within each layer, code is separated by domain or feature. For example, in the case of `entities/user` and `features/add-todo` — `user` and `add-todo` are called slices. Finally, each slice is further broken down by technical purposes such as **ui**, **model**, **api** and **lib**.
+The motivation of feature-sliced design is to organize the code into layers, each with its own responsibility and strict import rules. Higher layers can depend only on lower layers, but not the other way around. For instance, you can import something from the entities folder within features, but you can't import something from the features folder into entities. Within each layer, code is separated by business domain or module. For example, in the case of `entities/trade` and `features/add-contact` — `trade` and `add-contact` are called slices. Each slice is then further organized by its technical purpose, such as **ui**, **model**, **api**, and **lib**.
 
 ### Advantages
 
-As advantages, this folder structure has really strict boundaries, and each piece of business logic has a clear home. Team members always know where new code should go, and separation of concerns is explicit. If you are working on a todo application, the most basic structure will be something like:
+As advantages, this folder structure has really strict boundaries, and each piece of business logic has a clear home. Team members always know where new code should go, and separation of concerns is explicit. If you are working on an ERP application with modules like contacts, trade, and HR, the most basic structure will be something like:
 
 ```plaintext
   pages/
-    todos/
-      list/      # Route: /todos/list
-      detail/    # Route: /todos/detail
-    user/
-      profile/   # Route: /user/profile
+    contacts/
+      list/        # Route: /contacts/list
+      detail/      # Route: /contacts/detail
+    trade/
+      dashboard/   # Route: /trade/dashboard
+      orders/      # Route: /trade/orders
+    hr/
+      employees/   # Route: /hr/employees
+      payroll/     # Route: /hr/payroll
 
   widgets/
-    todos/
-      todo-list-widget/
-    user/
-      user-info-widget/
+    contacts/
+      contact-list-widget/
+    trade/
+      trade-stats-widget/
+    hr/
+      employee-overview-widget/
 
   features/
-    todos/
-      add-todo/
-      complete-todo/
-    user/
-      login/
-      update-profile/
+    contacts/
+      add-contact/
+      edit-contact/
+    trade/
+      new-order/
+      settle-invoice/
+    hr/
+      hire-employee/
+      process-payroll/
 
   entities/
-    todo/
-      model/    # State, types, selectors for todo
-      api/      # Network logic for todos
-      ui/       # Small, reusable UI (e.g., <TodoItem />)
-    user/
+    contact/
+      model/    # State, types, selectors for contact
+      api/      # Network logic for contacts
+      ui/       # Small, reusable UI (e.g., <ContactCard />)
+    trade/
+      model/
+      api/
+      ui/
+    employee/
       model/
       api/
       ui/
 ```
-
-It can look pretty confusing, but need to mention that this structure is intended for large projects. For a todo application, even type-based folder structure is more than enough.
 
 Secondly, dependencies between features are better maintainable in this structure if you compare it with feature-based structure. `widgets/trade/new-operation` can consume `features/finance/new-payment` easily, and it doesn't break any rules of this folder structure. As boundaries are pretty clear, it makes the code easy to scale, refactor and even delete.
 
