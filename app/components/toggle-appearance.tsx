@@ -1,19 +1,26 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { MoonIcon, SunIcon } from '@radix-ui/react-icons';
-import { useTheme } from 'next-themes';
+import * as React from "react";
+import { useEffect } from "react";
+import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
+import { useTheme } from "next-themes";
 
-import { Button } from '@/app/components/ui/button';
+import { Button } from "@/app/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/app/components/ui/dropdown-menu';
+} from "@/app/components/ui/dropdown-menu";
 
 export default function ToggleAppearance() {
-  const { setTheme } = useTheme();
+  const { setTheme, theme, systemTheme } = useTheme();
+
+  useEffect(() => {
+    if (!theme || theme === "system") {
+      setTheme("dark");
+    }
+  }, [theme, setTheme]);
 
   return (
     <DropdownMenu>
@@ -25,13 +32,13 @@ export default function ToggleAppearance() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme('light')}>
+        <DropdownMenuItem onClick={() => setTheme("light")}>
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('dark')}>
+        <DropdownMenuItem onClick={() => setTheme("dark")}>
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme('system')}>
+        <DropdownMenuItem onClick={() => setTheme("system")}>
           System
         </DropdownMenuItem>
       </DropdownMenuContent>
