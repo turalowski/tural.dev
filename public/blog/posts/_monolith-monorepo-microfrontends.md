@@ -1,7 +1,7 @@
 ---
 title: "Monolith, Monorepo, or Microfrontends? What these mean and what they actually fix"
 excerpt: "Spoiler alert: You probably don't need microfrontends unless your org chart looks like a subway map. Monoliths work, monorepos are tidy, and microfrontends... Well, after working at five different companies, I've seen lots of people suggest them, but whenever I asked what real benefits we'd get, the room got pretty quiet."
-date: "2026-07-16"
+date: "2026-06-16"
 tags:
   [
     "Architecture",

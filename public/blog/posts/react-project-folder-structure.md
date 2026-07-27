@@ -1,7 +1,7 @@
 ---
 title: "React Project Folder Structure — Patterns for Scalable Frontend Apps"
 excerpt: "A comparison of Type-based, Feature-based, and Feature-Sliced Design (FSD) React project folder structures."
-date: "2026-07-18"
+date: "2026-06-18"
 tags:
   - "React"
   - "Architecture"
