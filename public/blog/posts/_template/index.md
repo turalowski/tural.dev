@@ -14,6 +14,18 @@ locale: "en" # "en" → en_US, "az" → az_AZ
 category: "Engineering"
 ---
 
+<!--
+Post layout:
+  public/blog/posts/<slug>/index.md   ← this file (slug = folder name)
+  public/blog/posts/<slug>/*.png      ← images for this post
+
+Image URLs in markdown:
+  ![](/blog/posts/<slug>/your-image.png)
+
+Folders starting with `_` are drafts and are not published.
+Copy this folder, rename it to your slug (drop the leading `_` when ready to publish), and replace this content.
+-->
+
 Open with the problem or claim in the first paragraph. Search engines and readers both weight the start heavily — don't bury the point under context.
 
 ## Section heading that matches search intent

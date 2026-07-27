@@ -43,7 +43,7 @@ That's it. That's the whole prize. In practice, it looks like:
 
 A: When you publish to npm and have your shell app install other modules from there, you're still composing everything at build time, not at runtime. That means you don't actually get true independent deploys. Even if the code lives in different repos, you're still locked into coordinating builds and releases together.
 
-![Diagram: NPM package vs Microfrontend deployment](/blog/posts/npm-package-vs-microfrontend.png)
+![Diagram: NPM package vs Microfrontend deployment](/blog/posts/_monolith-monorepo-microfrontends/npm-package-vs-microfrontend.png)
 
 Getting this level of independence comes with serious tradeoffs:
 

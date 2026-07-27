@@ -12,7 +12,6 @@ import {
   getPostSlugs,
   getPostUrl,
   SITE_NAME,
-  TWITTER_HANDLE,
 } from "@/app/lib/blog";
 import ToggleAppearance from "@/app/components/toggle-appearance";
 
@@ -79,13 +78,7 @@ export async function generateMetadata({
           }
         : {}),
     },
-    twitter: {
-      card: imageUrl ? "summary_large_image" : "summary",
-      title: post.title,
-      description: post.description,
-      creator: TWITTER_HANDLE,
-      ...(imageUrl ? { images: [imageUrl] } : {}),
-    },
+
     robots: {
       index: true,
       follow: true,
@@ -120,7 +113,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <ToggleAppearance />
       </div>
       <header>
-        <h1 className="text-2xl font-bold mb-2 text-foreground">
+        <h1 className="text-2xl font-bold mb-2 text-primary dark:text-pink-200">
           {post.title}
         </h1>
         <div className="flex flex-col gap-1 text-xs text-muted-foreground">
@@ -150,36 +143,47 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </div>
           <div className="flex flex-wrap gap-1.5 my-6">
             {post.tags.map((tag) => (
-              <span key={tag} className="bg-muted px-2 py-0.5 rounded text-xs">
+              <span
+                key={tag}
+                className="bg-primary/10 text-primary dark:bg-pink-200 dark:text-black px-2 py-0.5 rounded text-xs font-medium transition-colors duration-100"
+              >
                 {tag}
               </span>
             ))}
           </div>
         </div>
       </header>
+
       <div className="prose prose-sm prose-neutral dark:prose-invert max-w-none">
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={{
             h1: ({ children }) => (
-              <h1 className="text-2xl font-bold mt-8 mb-4">{children}</h1>
+              <h1 className="text-2xl font-bold mt-8 mb-4 text-primary dark:text-pink-200">
+                {children}
+              </h1>
             ),
             h2: ({ children }) => (
-              <h2 className="text-xl font-semibold mt-6 mb-3">{children}</h2>
+              <h2 className="text-xl font-semibold mt-6 mb-3 text-primary dark:text-pink-200">
+                {children}
+              </h2>
             ),
             h3: ({ children }) => (
-              <h3 className="text-lg font-semibold mt-5 mb-2">{children}</h3>
+              <h3 className="text-lg font-semibold mt-5 mb-2 text-primary dark:text-pink-200">
+                {children}
+              </h3>
             ),
+
             p: ({ children }) => (
-              <p className="text-sm mb-4 leading-relaxed">{children}</p>
+              <p className="text-md mb-4 leading-relaxed">{children}</p>
             ),
             ul: ({ children }) => (
-              <ul className="text-sm list-disc pl-6 mb-4 space-y-2">
+              <ul className="text-md list-disc pl-6 mb-4 space-y-2">
                 {children}
               </ul>
             ),
             ol: ({ children }) => (
-              <ol className="text-sm list-decimal pl-6 mb-4 space-y-2">
+              <ol className="text-md list-decimal pl-6 mb-4 space-y-2">
                 {children}
               </ol>
             ),
@@ -192,12 +196,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </code>
             ),
             blockquote: ({ children }) => (
-              <blockquote className="border-l-4 border-muted-foreground/30 pl-4 py-2 mb-4 italic text-muted-foreground">
+              <blockquote className="pl-4 border-l-4 border-primary dark:border-pink-400 text-primary dark:text-pink-400 italic my-4">
                 {children}
               </blockquote>
             ),
+
             pre: ({ children }) => (
-              <pre className="bg-muted p-4 rounded-lg overflow-x-auto mb-4 text-sm">
+              <pre className="bg-muted p-4 rounded-lg overflow-x-auto mb-4 text-md">
                 {children}
               </pre>
             ),

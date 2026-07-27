@@ -120,9 +120,10 @@ export default async function BlogPage() {
                     day: "numeric",
                   })}
                 </time>
-                <h2 className="text-xl font-semibold mb-2 text-foreground group-hover:text-primary transition-colors">
+                <h2 className="text-xl font-semibold mb-2 text-foreground dark:text-pink-200 group-hover:text-pink-400">
                   {post.title}
                 </h2>
+
                 <p className="text-sm text-muted-foreground leading-relaxed mb-3">
                   {post.excerpt}
                 </p>

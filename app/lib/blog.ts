@@ -5,7 +5,6 @@ import matter from "gray-matter";
 export const SITE_URL = "https://tural.dev";
 export const SITE_NAME = "Tural Hajiyev";
 export const DEFAULT_AUTHOR = "Tural Hajiyev";
-export const TWITTER_HANDLE = "@turalowski";
 
 const POSTS_DIR = path.join(process.cwd(), "public", "blog", "posts");
 
@@ -28,12 +27,16 @@ export interface BlogPost extends BlogPostMeta {
   content: string;
 }
 
-function isPublishableFile(filename: string): boolean {
-  return (
-    filename.endsWith(".md") &&
-    !filename.startsWith("_") &&
-    !filename.startsWith(".")
-  );
+function isPublishableDir(dirname: string): boolean {
+  return !dirname.startsWith("_") && !dirname.startsWith(".");
+}
+
+function getPostDir(slug: string): string {
+  return path.join(POSTS_DIR, slug);
+}
+
+function getPostIndexPath(slug: string): string {
+  return path.join(getPostDir(slug), "index.md");
 }
 
 function parseFrontmatter(
@@ -96,9 +99,14 @@ export function getPostSlugs(): string[] {
   if (!fs.existsSync(POSTS_DIR)) return [];
 
   return fs
-    .readdirSync(POSTS_DIR)
-    .filter(isPublishableFile)
-    .map((filename) => filename.replace(/\.md$/, ""));
+    .readdirSync(POSTS_DIR, { withFileTypes: true })
+    .filter(
+      (entry) =>
+        entry.isDirectory() &&
+        isPublishableDir(entry.name) &&
+        fs.existsSync(getPostIndexPath(entry.name)),
+    )
+    .map((entry) => entry.name);
 }
 
 export function getPostBySlug(slug: string): BlogPost | null {
@@ -106,7 +114,7 @@ export function getPostBySlug(slug: string): BlogPost | null {
     return null;
   }
 
-  const filePath = path.join(POSTS_DIR, `${slug}.md`);
+  const filePath = getPostIndexPath(slug);
   if (!fs.existsSync(filePath)) return null;
 
   try {
