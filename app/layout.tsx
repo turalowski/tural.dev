@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Source_Code_Pro } from "next/font/google";
 import { ThemeProvider } from "./components/theme-provider";
-import { SITE_NAME, SITE_URL, TWITTER_HANDLE } from "./lib/blog";
+import { SITE_NAME, SITE_URL } from "./lib/blog";
 import "./globals.css";
 
 const source_code_pro = Source_Code_Pro({ subsets: ["latin"] });
@@ -24,10 +24,6 @@ export const metadata: Metadata = {
     title: SITE_NAME,
     description:
       "Personal website of Tural Hajiyev. Frontend engineer writing about web architecture, product, and engineering practice.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    creator: TWITTER_HANDLE,
   },
   robots: {
     index: true,
