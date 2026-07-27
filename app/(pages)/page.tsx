@@ -4,12 +4,7 @@ import { Metadata } from "next";
 import { Button } from "../components/ui/button";
 import ToggleAppearance from "../components/toggle-appearance";
 import { Badge } from "../components/ui/badge";
-import {
-  getAllPosts,
-  SITE_NAME,
-  SITE_URL,
-  TWITTER_HANDLE,
-} from "@/app/lib/blog";
+import { getAllPosts, SITE_NAME, SITE_URL } from "@/app/lib/blog";
 
 export const metadata: Metadata = {
   title: {
@@ -37,13 +32,6 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: SITE_URL,
     siteName: SITE_NAME,
-  },
-  twitter: {
-    card: "summary",
-    title: `${SITE_NAME} — Blog`,
-    description:
-      "Notes on frontend engineering, web architecture, and building products — by Tural Hajiyev.",
-    creator: TWITTER_HANDLE,
   },
   robots: {
     index: true,
