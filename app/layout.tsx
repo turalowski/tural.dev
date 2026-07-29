@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Source_Code_Pro } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "./components/theme-provider";
 import { SITE_NAME, SITE_URL } from "./lib/blog";
 import "./globals.css";
 
-const source_code_pro = Source_Code_Pro({ subsets: ["latin"] });
+const source_code_pro = JetBrains_Mono({ weight: "400", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

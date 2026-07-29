@@ -191,7 +191,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <li className="leading-relaxed">{children}</li>
             ),
             code: ({ children }) => (
-              <code className="bg-muted px-1.5 py-0.5 rounded text-xs font-mono">
+              <code className="bg-muted px-1.5 py-0.5 rounded text-md font-mono">
                 {children}
               </code>
             ),

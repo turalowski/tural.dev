@@ -1,7 +1,7 @@
 ---
-title: "How a web page loads html, css and js content."
+title: "How a web page loads html, css and js content"
 excerpt: "This post briefly explains what happens after opening a specific website. It describes the steps to load HTML, CSS, and JS files, and the differences between these processes."
-date: "2025-03-15"
+date: "2025-12-10"
 tags:
   - "Web Development"
   - "Browser Internals"
