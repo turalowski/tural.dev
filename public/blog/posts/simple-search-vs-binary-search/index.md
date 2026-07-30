@@ -1,7 +1,7 @@
 ---
 title: "Simple Search vs Binary Search"
 excerpt: "Binary search isn't smarter than simple search. It's just the kid who gets privileges because the house was already cleaned up before he arrived."
-date: "2024-10-25"
+date: "2025-02-12"
 tags:
   - "Algorithms"
   - "Binary Search"

@@ -1,7 +1,7 @@
 ---
 title: "GraphQL vs REST API — What pains do we have with Rest API that GraphQL solves it?"
 excerpt: "REST gives you fixed endpoints and rigid responses — the server decides the shape. With GraphQL, the client defines exactly the data needed in one request."
-date: "2025-10-24"
+date: "2024-10-24"
 tags:
   - "API Design"
   - "GraphQL"
