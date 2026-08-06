@@ -14,6 +14,7 @@ import {
   SITE_NAME,
 } from "@/app/lib/blog";
 import ToggleAppearance from "@/app/components/toggle-appearance";
+import MarkdownCode from "@/app/components/markdown-code";
 
 interface BlogPostPageProps {
   params: {
@@ -190,22 +191,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             li: ({ children }) => (
               <li className="leading-relaxed">{children}</li>
             ),
-            code: ({ children }) => (
-              <code className="bg-muted px-1.5 py-0.5 rounded text-md font-mono">
-                {children}
-              </code>
-            ),
+            code: MarkdownCode,
             blockquote: ({ children }) => (
               <blockquote className="pl-4 border-l-4 border-primary dark:border-pink-400 text-primary dark:text-pink-400 italic my-4">
                 {children}
               </blockquote>
             ),
-
-            pre: ({ children }) => (
-              <pre className="bg-muted p-4 rounded-lg overflow-x-auto mb-4 text-md">
-                {children}
-              </pre>
-            ),
+            // SyntaxHighlighter owns the block chrome; avoid a nested <pre>.
+            pre: ({ children }) => <>{children}</>,
           }}
         >
           {post.content}
