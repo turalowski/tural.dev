@@ -1,5 +1,5 @@
 ---
-title: "Lesser known TypeScript solutions I learned recently and started to use often"
+title: "TypeScript solutions I learned recently and started to use often"
 excerpt: "It's about lesser known TypeScript solutions, which directly help to improve the code and avoid duplication and inconsistency between type definitions"
 date: "2026-08-04"
 tags:
@@ -247,7 +247,6 @@ addRelation({
   relationType: "vendor",
   createdAt: new Date(),
 }); // new
-addRleations();
 ```
 
 That's how it will look with IntelliSense. By clicking the arrow keys, it's possible to use different argument/return types.

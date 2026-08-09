@@ -197,6 +197,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 {children}
               </blockquote>
             ),
+            strong: ({ children }) => (
+              <mark className="bg-yellow-200 dark:bg-pink-300/50 dark:text-white px-1 rounded">
+                {children}
+              </mark>
+            ),
+
+            em: ({ children }) => (
+              <span className="underline decoration-pink-400 dark:decoration-pink-300 underline-offset-2">
+                {children}
+              </span>
+            ),
+
             // SyntaxHighlighter owns the block chrome; avoid a nested <pre>.
             pre: ({ children }) => <>{children}</>,
           }}
