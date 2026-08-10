@@ -40,7 +40,7 @@ export default function MarkdownCode({
 
   if (!isBlock) {
     return (
-      <code className="bg-muted px-1.5 py-0.5 rounded text-md font-mono">
+      <code className="bg-yellow-200 dark:bg-pink-300/50 px-1.5 py-0.5 rounded text-md font-mono">
         {children}
       </code>
     );
@@ -48,8 +48,7 @@ export default function MarkdownCode({
 
   const languageKey = match?.[1]?.toLowerCase() ?? "text";
   const language = LANGUAGE_ALIASES[languageKey] ?? languageKey;
-  const style =
-    mounted && resolvedTheme === "light" ? oneLight : oneDark;
+  const style = oneDark;
 
   return (
     <SyntaxHighlighter

@@ -97,7 +97,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const jsonLd = buildBlogPostingJsonLd(post);
 
   return (
-    <article className="container mx-auto px-4 py-6 max-w-4xl">
+    <article className="container mx-auto px-4 py-6 max-w-4xl  rounded-lg shadow-sm transition-colors">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -155,7 +155,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
       </header>
 
-      <div className="prose prose-sm prose-neutral dark:prose-invert max-w-none">
+      <div className="prose prose-sm prose-neutral dark:prose-invert max-w-none bg-white dark:bg-transparent transition-colors">
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           components={{
@@ -216,7 +216,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           {post.content}
         </ReactMarkdown>
       </div>
-      <footer className="mt-10 border-t pt-6 text-xs text-center text-muted-foreground">
+      <footer className="mt-10 border-t pt-6 text-xs text-center text-muted-foreground bg-white dark:bg-transparent transition-colors rounded-b-lg">
         <p>
           <span role="img" aria-label="robot">
             🤖
