@@ -39,10 +39,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function BlogPage() {
-  // const posts = getAllPosts();
+const HIDE_POSTS = true; // Set to true to hide all posts
 
-  const posts = [];
+export default async function BlogPage() {
+  const posts = HIDE_POSTS ? [] : getAllPosts();
 
   const jsonLd = {
     "@context": "https://schema.org",
