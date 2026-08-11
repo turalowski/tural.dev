@@ -14,7 +14,7 @@ category: "Engineering"
 
 The most recent project I was working on was pretty huge, and the downside was we were not using TypeScript very well. In a few places we had 'any' assertions. We were not using deep TypeScript concepts; generally, we were just creating interfaces for types and objects.
 
-As the project grew, repetition and inconsistency started to hurt us and the project. I read the TypeScript documentation a long time ago, and decided to read it again with a fresh mind, and see what could be applied to the project to simplify things.
+After taking another look at the TypeScript documentation, we found a few solutions that really helped improve the TypeScript code and fix several main issues.
 
 ## Utility Functions
 
@@ -65,7 +65,7 @@ interface Partner extends Pick<Relation, "name" | "surname"> {
 }
 ```
 
-Now, if we ever change the definition of `name` or `surname` in `Relation`, `Partner` will automatically stay in sync. WE don't need to repeat ourselves, and we avoid silent type drift across your codebase.
+Now, if we ever change the definition of `name` or `surname` in `Relation`, `Partner` will automatically stay in sync. We don't need to repeat ourselves, and we avoid silent type drift across your codebase.
 
 Conversely, `Omit` helps you reuse all properties _except_ a few:
 
@@ -171,7 +171,7 @@ The `Common` interface handles any genuinely shared props, so you still avoid co
 
 ## Deprecating old function
 
-It's pretty common to have a function that was created a long time ago, and after requirements shift, you need to update its logic, arguments, or return type.
+It's pretty common to have a function that was created a long time ago, and after requirements shift, you need to update its logic, arguments, or r eturn type.
 
 For example, at one of my previous workplace, we agreed functions should have no more than two arguments. If you have three or more, you should use an options object instead. Making this change was not easy for several reasons:
 
