@@ -1,7 +1,7 @@
 ---
-title: "GraphQL vs REST API — What REST Pain Points Does GraphQL Solve?"
+title: "GraphQL vs REST API — Which one to choose?"
 excerpt: "REST gives you fixed endpoints with set responses controlled by the server. GraphQL lets the client pick the exact data needed in a single request."
-date: "2024-11-24"
+date: "2026-04-24"
 tags:
   - "API Design"
   - "GraphQL"
@@ -14,9 +14,9 @@ locale: "en"
 category: "Engineering"
 ---
 
-> In REST APIs, the server shapes every response. You get fixed endpoints like (`/relations/1`, `/relations/1/trade-operations`), and each returns a defined structure. GraphQL lets the client decide which fields to fetch—from a single endpoint (`/graphql`).
+> A REST API is like a restaurant with a set of fixed combo menus. You can order Menu A, which comes with a burger, fries, and a cola — but you can't swap the fries for a salad. GraphQL, on the other hand, sells you everything à la carte, so you build your own plate exactly the way you want it.
 
-Suppose you're building an ERP app and using REST. You want to display relations, trade operations, and finance data. The backend team sets up **/relations** and wires up each endpoint:
+Say you're building an ERP application and it uses a REST API to make requests for different modules. Different API endpoints help get data related to relations, trade operations, and finance data. For example, the backend team sets up **/relations** and wires up each endpoint:
 
 ```bash
 GET /api/v1/relations/
@@ -27,23 +27,52 @@ PUT /api/v1/relations
 DELETE /api/v1/relations
 ```
 
+In REST APIs, the server shapes every response. You get fixed endpoints like (`/relations/1`, `/relations/1/trade-operations`), and each returns a defined structure.
+
 ## Over-Fetching and Needing Backend Changes
 
-Maybe the relations list is huge. But for a dashboard, you only need `fullName`, `companyName`, and `date`. Calling `GET /api/v1/relations` brings back all fields—more than you want. That's over-fetching.
+The `GET /api/v1/relations` endpoint returns a large dataset for each relation. For example, the data might look like this:
 
-You can try to fix this in REST in two ways:
+```json
+[
+  {
+    "id": "1725",
+    "fullName": "Michael Scott",
+    "companyName": "Dunder Mifflin",
+    "date": "2024-01-01",
+    "address": "1725 Slough Avenue, Scranton, PA",
+    "phone": "555-2323",
+    "notes": "World's Best Boss"
+    // ...many other fields
+  },
+  {
+    "id": "1726",
+    "fullName": "Pam Beesly",
+    "companyName": "Dunder Mifflin",
+    "date": "2024-01-10",
+    "address": "1727 Slough Avenue, Scranton, PA",
+    "phone": "555-4545",
+    "notes": "Receptionist"
+    // ...many other fields
+  }
+]
+```
+
+For the relations page, we need this data. A new task comes in, and it's required to show relations on the dashboard in compact form. For the dashboard, you only need `fullName`, `companyName`, and `date`. Calling `GET /api/v1/relations` brings back all fields—more than you want. That's over-fetching.
+
+With REST API, there are two common ways to improve it. Either a new endpoint can be introduced with the compact data,
 
 ```bash
 GET /api/v1/relations/mini-dashboard
 ```
 
-or:
+or filters can be added, which can be used to get only the necessary fields:
 
 ```bash
 GET /api/v1/relations?fields=fullName,companyName,date
 ```
 
-Either way, you need backend changes. Each adjustment means new endpoints or changes to field handling. There's no built-in flexibility. Over time, endpoints may drift from what the frontend needs.
+Both implementations require backend changes. It's required to add a new endpoint, or update the existing one. Over time, endpoints may drift from what the frontend needs.
 
 Over-fetching isn't just a read concern. If you POST a new relation and want only the `id` and `fullName` back, you still might get the entire object:
 
@@ -60,9 +89,11 @@ Over-fetching isn't just a read concern. If you POST a new relation and want onl
 }
 ```
 
-GraphQL uses a different model. There's one endpoint (`/graphql`). The client picks the fields it wants, regardless of scenario.
+Getting a bunch of unnecessary data back, with no way to avoid it, is called **over-fetching**.
 
-Instead of `/api/v1/relations` always returning the same thing, a GraphQL query can be as specific as you like:
+GraphQL uses a different model. There's one endpoint (`/graphql`). The frontend picks the fields it wants, regardless of scenario.
+
+Instead of `/api/v1/relations` always returning the same thing, a GraphQL query can be as specific as the client likes:
 
 ```graphql
 query {
@@ -74,8 +105,10 @@ query {
 }
 ```
 
-1. No over-fetching—just the fields you ask for.
-2. No backend change needed for small tweaks. Need to add `date`? Just include it in your query (as long as that field's in the schema).
+GraphQL lets the client decide which fields to fetch—from a single endpoint (`/graphql`).
+
+1. No over-fetching anymore, and frontend gets the fields it asks for.
+2. No backend change needed for small tweaks. Need to add a date field? Only need to include it in the query (as long as that field's in the schema).
 
 ## Multiple Requests and Chatty APIs
 
@@ -106,11 +139,11 @@ query DashboardRelations {
 }
 ```
 
-You avoid both over- and under-fetching, and you don't need to merge and manage results from multiple REST calls.
+It's easy to avoid over-fetching, and there's no need to merge and manage results from multiple REST calls.
 
 ## Type Safety
 
-REST returns generic JSON. On the frontend, you write TypeScript interfaces to match the responses. If the backend changes a field (or its name), your types can get out of sync. It's easy to miss these changes, and your app and API quickly drift apart.
+REST returns generic JSON. On the frontend, developers can write TypeScript interfaces to match the responses. If the backend changes a field (or its name), types can get out of sync easily. It's easy to miss these changes, and your app and API quickly drift apart.
 
 You often handcraft interfaces:
 
@@ -133,6 +166,10 @@ interface Relation {
 }
 ```
 
+If the backend renames a field (say, `amount` becomes `value`), in REST you need to find and update every related TypeScript interface throughout your app. As your app grows, this gets more painful.
+
+With GraphQL, the schema is typed, and you can generate your TypeScript types straight from it. When the schema changes, just rerun codegen, and your frontend types stay in sync. No guesswork, no more hand-maintained interfaces.
+
 ## Cache Sync
 
 With REST, you typically have to refetch big lists (inefficient), or manually patch cached entries (fragile and messy):
@@ -145,16 +182,12 @@ const mutation = useMutation(updatePost, {
 });
 ```
 
-GraphQL tools cache data by unique ID. When you update an object, all clients using that data see the change automatically. No need to refetch lists or manually update the cache.
-
-If the backend renames a field (say, `amount` becomes `value`), in REST you need to find and update every related TypeScript interface throughout your app. As your app grows, this gets more painful.
-
-With GraphQL, the schema is typed, and you can generate your TypeScript types straight from it. When the schema changes, just rerun codegen, and your frontend types stay in sync. No guesswork, no more hand-maintained interfaces.
+With a normalized GraphQL client like Apollo or Relay, data is cached by unique ID. When an object is updated, all parts of the UI using that data are updated automatically. No need to refetch lists or manually update the cache. (Note that this caching behavior comes from the client library, not GraphQL itself.)
 
 ## When To Use GraphQL or REST
 
-It depends. If your data is deeply nested, you support multiple clients with different data needs, or you hit over-/under-fetching pains, GraphQL fits the bill. One schema acts as the source of truth. Frontend teams can move faster—no constant backend tweaks.
+It depends. If the data is deeply nested, and you have multiple clients with different data needs, that's when GraphQL shines. Or, if there are over-fetching pains in many places, GraphQL is a great tool to use. One schema acts as the source of truth. Frontend teams can move faster without constantly asking for changes from backend tweaks.
 
-If your API is simple—just a few resources, basic CRUD, file uploads—REST is often best. Simple is good for files, webhooks, and integrations that don't need deep flexibility.
+If the API is simple—just a few resources, basic CRUD, and maybe file uploads, REST is often best. Simple is good for files, webhooks, and integrations that don't need deep flexibility.
 
 In practice, teams mix both: GraphQL for the main app UI, REST for jobs like file uploads, authentication, webhook handlers, or talking to legacy systems. The setup isn't always pretty, but it works and scales as needs evolve.

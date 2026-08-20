@@ -118,30 +118,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           {post.title}
         </h1>
         <div className="flex flex-col gap-1 text-xs text-muted-foreground">
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-            <span>{post.author}</span>
-            <span aria-hidden>•</span>
-            <time dateTime={post.date}>
-              {new Date(post.date).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </time>
-            {post.updated && post.updated !== post.date ? (
-              <>
-                <span aria-hidden>•</span>
-                <time dateTime={post.updated}>
-                  Updated{" "}
-                  {new Date(post.updated).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </time>
-              </>
-            ) : null}
-          </div>
           <div className="flex flex-wrap gap-1.5 my-6">
             {post.tags.map((tag) => (
               <span

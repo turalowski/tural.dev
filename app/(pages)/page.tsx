@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   },
 };
 
-const HIDE_POSTS = true; // Set to true to hide all posts
+const HIDE_POSTS = false; // Set to true to hide all posts
 
 export default async function BlogPage() {
   const posts = HIDE_POSTS ? [] : getAllPosts();
@@ -100,16 +100,6 @@ export default async function BlogPage() {
           >
             <div className="flex flex-col space-y-3">
               <div>
-                <time
-                  dateTime={post.date}
-                  className="block text-xs text-muted-foreground mb-1"
-                >
-                  {new Date(post.date).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </time>
                 <h2 className="text-xl font-semibold mb-2 text-foreground dark:text-pink-200 group-hover:text-pink-400">
                   {post.title}
                 </h2>

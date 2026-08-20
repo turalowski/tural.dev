@@ -1,7 +1,7 @@
 ---
 title: "Simple Search vs Binary Search"
 excerpt: "Binary search isn't smarter than simple search. It's just efficient because someone did the organizing work ahead of time."
-date: "2025-02-12"
+date: "2026-02-12"
 tags:
   - "Algorithms"
   - "Binary Search"
@@ -13,23 +13,21 @@ locale: "en"
 category: "Engineering"
 ---
 
-Imagine a shelf filled with steelbooks (special edition movie cases) arranged in no particular order. Someone asks if I own "The Dark Knight."
-
-I've placed the steelbooks from my favorites to least favorites.
+Imagine a shelf filled with steelbooks (special edition movie cases) that I've arranged from my favorites to least favorites. Someone asks if I own "The Dark Knight."
 
 To find "The Dark Knight," I start at one end and check each steelbook one by one until I find it or reach the end of the shelf. That's the whole method: simple, straightforward, and in the worst case I check all _n_ movies.
 
 This is called **linear search** or **simple search**. I prefer **simple** because it doesn't pretend to be clever.
 
-Now, suppose someone suggests starting with the steelbook in the middle.
+As the collection grows, it becomes hard to find a steelbook if it's located at the end.
 
-If the middle movie title comes after "The Dark Knight" alphabetically, I can ignore the entire right half. If it comes before, I skip the left half. Then repeat. Each step lets me eliminate half of what's left—no need to look at every case.
+One of my friends who knows this pain recommends ordering the shelf alphabetically. He reasons that if the middle movie title comes after "The Dark Knight" alphabetically, I can ignore the entire right half. If it comes before, I skip the left half. Then repeat. Each step lets me eliminate half of what's left—no need to look at every case.
 
 This is **binary search**. On a shelf with one million steelbooks, you'll find your answer in about twenty checks. For a billion, about thirty checks. The work scales with the number of digits in the collection size, not the size itself.
 
 > Simple search scales with the shelf size. Binary search scales with the _logarithm_ of the shelf size.
 
-It's easy to think binary search is just a faster version of simple search. But that's not accurate. That misunderstanding is common.
+It's easy to think binary search is just a faster version of simple search. But that's not accurate, even though it's a common assumption.
 
 ---
 
@@ -94,7 +92,7 @@ function binarySearch(sortedList, target) {
 
 > _You're slicing the search space in half each time._ But you never specified _who_ sorted the shelf, _when_, or _how often you have to do it again_.
 
-If my steelbooks come in randomly and I only need to find "The Dark Knight" once, it actually takes more work to sort the shelf just to run binary search. Sorting takes more effort than a single walk through. That would be inefficient.
+If my steelbooks come in randomly and I only need to find "The Dark Knight" once, it actually takes more work to sort the shelf just to run binary search. Sorting takes more effort than a single walk through, so it wouldn't be worth it.
 
 But if I need to search this shelf over and over, alphabetizing it once (or sorting as I add new movies) makes sense. Now, binary search is only _part_ of the story—the upfront cost pays off over many searches.
 
