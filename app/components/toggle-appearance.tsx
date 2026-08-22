@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { useEffect } from "react";
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { useTheme } from "next-themes";
@@ -14,7 +13,7 @@ import {
 } from "@/app/components/ui/dropdown-menu";
 
 export default function ToggleAppearance() {
-  const { setTheme, theme, systemTheme } = useTheme();
+  const { setTheme, theme } = useTheme();
 
   useEffect(() => {
     if (!theme || theme === "system") {

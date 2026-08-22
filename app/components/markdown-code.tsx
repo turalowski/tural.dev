@@ -1,12 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
+import type { ReactNode } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import {
-  oneDark,
-  oneLight,
-} from "react-syntax-highlighter/dist/esm/styles/prism";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const LANGUAGE_ALIASES: Record<string, string> = {
   js: "javascript",
@@ -21,7 +17,7 @@ const LANGUAGE_ALIASES: Record<string, string> = {
 
 type MarkdownCodeProps = {
   className?: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
 };
 
 export default function MarkdownCode({
@@ -31,12 +27,6 @@ export default function MarkdownCode({
   const match = /language-([\w-]+)/.exec(className || "");
   const raw = String(children).replace(/\n$/, "");
   const isBlock = Boolean(match) || raw.includes("\n");
-  const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   if (!isBlock) {
     return (
@@ -48,12 +38,11 @@ export default function MarkdownCode({
 
   const languageKey = match?.[1]?.toLowerCase() ?? "text";
   const language = LANGUAGE_ALIASES[languageKey] ?? languageKey;
-  const style = oneDark;
 
   return (
     <SyntaxHighlighter
       language={language}
-      style={style}
+      style={oneDark}
       PreTag="div"
       customStyle={{
         margin: "0 0 1rem",
