@@ -1,6 +1,6 @@
 ---
-title: "How a web page loads html, css and js content"
-excerpt: "This post briefly explains what happens after opening a specific website. It describes the steps to load HTML, CSS, and JS files, and the differences between these processes."
+title: "How a Web Page Loads HTML, CSS, and JS Content"
+excerpt: "What happens between typing a URL and seeing the page"
 date: "2025-04-10"
 tags:
   - "Web Development"
@@ -16,22 +16,22 @@ HTML document is the first thing the browser needs before anything can be shown.
 
 Once the HTML starts arriving, the browser doesn't wait for the whole file and it begins parsing immediately, streaming through the markup from top to bottom, converting tags into a tree of nodes called the DOM (Document Object Model).
 
-This top-to-bottom order matters a lot. The position of a <link> or <script> tag in the document directly affects when and how the browser handles it.
+This top-to-bottom order matters a lot. The position of a `<link>` or `<script>` tag in the document directly affects when and how the browser handles it.
 
-### Hitting a <link rel="stylesheet">
+## Hitting a <link rel="stylesheet">
 
 When the parser encounters a CSS file, it doesn't stop building the DOM. CSS doesn't block HTML parsing.
 
-CSS file only blocks rendering. The browser won't paint anything to the screen until it knows the styles, because painting unstyled content and then restyling it would cause an ugly flash and wasted work. The CSS file is fetched, parsed into the CSSOM (CSS Object Map), and once both the DOM and CSSOM are ready, they combine into the render tree.
+CSS file only blocks rendering. The browser won't paint anything to the screen until it knows the styles, because painting unstyled content and then restyling it would cause an ugly flash and wasted work. The CSS file is fetched, parsed into the CSSOM (CSS Object Model), and once both the DOM and CSSOM are ready, they combine into the render tree.
 
 > CSS doesn’t block the HTML parser, but it does block rendering.
 
-### Hitting a <script> Tag
+## Hitting a <script> Tag
 
 There are 2 pathways here:
 
-- **Inline `<script>`**: already in the HTML, no network request needed.
-- **External `<script src="...">`**: the browser has to fetch it.
+- Inline `<script>`: already in the HTML, no network request needed.
+- External `<script src="...">`: the browser has to fetch it.
 
 Script tags block the HTML parser by default. The browser's HTML parser reads your page top to bottom, building the DOM as it goes. When it hits a <script> tag with no attributes, it has to:
 
@@ -40,7 +40,7 @@ Script tags block the HTML parser by default. The browser's HTML parser reads yo
 3. Run the JS engine on it, fully, top to bottom.
 4. Only then resume parsing the rest of the HTML.
 
-> **That's why put your <script> tags at the bottom of <body>" was classic advice — it let the page's visible content parse first, otherwise all content will be blocked.**
+> Always put your <script> tags at the bottom of <body> — it's classic advice everyone has heard at least once. Let the page's visible content parse first; otherwise, all content will be blocked.
 
 Plain <script>: blocks HTML parsing entirely while it fetches and runs.
 
@@ -55,8 +55,6 @@ async fetches in parallel with HTML parsing, but runs the moment it's ready. It 
 defer fetches in parallel too, but always waits until the HTML document is fully parsed, and runs multiple deferred scripts in their original order.
 
 ![](/blog/posts/how-web-page-is-loaded/defer-script.png)
-
-There is also `type="module"`. It behaves like defer by default, and can also be fetched with dependency graphs (an import in one module triggers fetching another).
 
 Once the DOM (structure) and CSSOM (styles) both exist, the browser merges them into the render tree.
 
