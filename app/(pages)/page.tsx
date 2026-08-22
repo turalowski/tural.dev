@@ -90,7 +90,6 @@ export default async function BlogPage() {
         </h1>
         <p className="text-lg text-muted-foreground mb-3">Frontend Engineer</p>
       </div>
-
       <div className="space-y-4">
         {posts.map((post) => (
           <Link
@@ -100,10 +99,18 @@ export default async function BlogPage() {
           >
             <div className="flex flex-col space-y-3">
               <div>
+                <div className="flex items-center gap-3 mb-1">
+                  <span className="text-xs text-muted-foreground">
+                    {new Date(post.date).toLocaleDateString(undefined, {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </span>
+                </div>
                 <h2 className="text-xl font-semibold mb-2 text-foreground dark:text-pink-200 group-hover:text-pink-400">
                   {post.title}
                 </h2>
-
                 <p className="text-sm text-muted-foreground leading-relaxed mb-3">
                   {post.excerpt}
                 </p>

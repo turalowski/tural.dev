@@ -117,17 +117,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <h1 className="text-2xl font-bold mb-2 text-primary dark:text-pink-200">
           {post.title}
         </h1>
-        <div className="flex flex-col gap-1 text-xs text-muted-foreground">
-          <div className="flex flex-wrap gap-1.5 my-6">
-            {post.tags.map((tag) => (
-              <span
-                key={tag}
-                className="bg-primary/10 text-primary dark:bg-pink-200 dark:text-black px-2 py-0.5 rounded text-xs font-medium transition-colors duration-100"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
+        <div className="flex items-center gap-3 mb-1">
+          <span className="text-xs text-muted-foreground">
+            {new Date(post.date).toLocaleDateString(undefined, {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
+          </span>
         </div>
       </header>
 
