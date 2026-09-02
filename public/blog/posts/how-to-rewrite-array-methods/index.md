@@ -1,6 +1,6 @@
 ---
 title: "How to Rewrite Array Methods — map, filter, reduce, flatMap From Scratch"
-excerpt: "Reimplementing map, filter, reduce and flatMap from scratch, including the edge cases like thisArg and sparse arrays that interviews love to catch you on."
+excerpt: "Reimplementing map, filter, reduce and flatMap from scratch"
 date: "2026-09-02"
 tags:
   - "JavaScript"
