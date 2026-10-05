@@ -1,8 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import { Metadata } from "next";
 import {
   buildBlogPostingJsonLd,
@@ -13,8 +11,7 @@ import {
   getPostUrl,
   SITE_NAME,
 } from "@/app/lib/blog";
-import ToggleAppearance from "@/app/components/toggle-appearance";
-import MarkdownCode from "@/app/components/markdown-code";
+import PostBody from "@/app/components/post-body";
 
 interface BlogPostPageProps {
   params: {
@@ -97,7 +94,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const jsonLd = buildBlogPostingJsonLd(post);
 
   return (
-    <article className="container mx-auto px-4 py-6 max-w-4xl  rounded-lg shadow-sm transition-colors">
+    <article className="container mx-auto px-4 py-6 max-w-[50rem]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -110,11 +107,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <ArrowLeftIcon className="mr-2 h-4 w-4" />
           Back to all posts
         </Link>
-
-        <ToggleAppearance />
       </div>
       <header>
-        <h1 className="text-2xl font-bold mb-2 text-primary dark:text-pink-200">
+        <h1 className="text-3xl font-bold tracking-tight leading-tight mb-2 sm:text-4xl text-foreground">
           {post.title}
         </h1>
         <div className="flex items-center gap-3 mb-1">
@@ -128,68 +123,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </div>
       </header>
 
-      <div className="prose prose-sm prose-neutral dark:prose-invert max-w-none bg-white dark:bg-transparent transition-colors">
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          components={{
-            h1: ({ children }) => (
-              <h1 className="text-2xl font-bold mt-8 mb-4 text-primary dark:text-pink-200">
-                {children}
-              </h1>
-            ),
-            h2: ({ children }) => (
-              <h2 className="text-xl font-semibold mt-6 mb-3 text-primary dark:text-pink-200">
-                {children}
-              </h2>
-            ),
-            h3: ({ children }) => (
-              <h3 className="text-lg font-semibold mt-5 mb-2 text-primary dark:text-pink-200">
-                {children}
-              </h3>
-            ),
-
-            p: ({ children }) => (
-              <p className="text-md mb-4 leading-relaxed">{children}</p>
-            ),
-            ul: ({ children }) => (
-              <ul className="text-md list-disc pl-6 mb-4 space-y-2">
-                {children}
-              </ul>
-            ),
-            ol: ({ children }) => (
-              <ol className="text-md list-decimal pl-6 mb-4 space-y-2">
-                {children}
-              </ol>
-            ),
-            li: ({ children }) => (
-              <li className="leading-relaxed">{children}</li>
-            ),
-            code: MarkdownCode,
-            blockquote: ({ children }) => (
-              <blockquote className="pl-4 border-l-4 border-primary dark:border-pink-400 text-primary dark:text-pink-400 italic my-4">
-                {children}
-              </blockquote>
-            ),
-            strong: ({ children }) => (
-              <mark className="bg-yellow-200 dark:bg-pink-300/50 dark:text-white px-1 rounded">
-                {children}
-              </mark>
-            ),
-
-            em: ({ children }) => (
-              <span className="underline decoration-pink-400 dark:decoration-pink-300 underline-offset-2">
-                {children}
-              </span>
-            ),
-
-            // SyntaxHighlighter owns the block chrome; avoid a nested <pre>.
-            pre: ({ children }) => <>{children}</>,
-          }}
-        >
-          {post.content}
-        </ReactMarkdown>
-      </div>
-      <footer className="mt-10 border-t pt-6 text-xs text-center text-muted-foreground bg-white dark:bg-transparent transition-colors rounded-b-lg">
+      <PostBody slug={post.slug} content={post.content} />
+      <footer className="mt-10 border-t pt-6 text-xs text-center text-muted-foreground">
         <p>
           <span role="img" aria-label="robot">
             🤖

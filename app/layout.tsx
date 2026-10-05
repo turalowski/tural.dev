@@ -1,10 +1,18 @@
 import type { Metadata } from "next";
-import { Fira_Code } from "next/font/google";
-import { ThemeProvider } from "./components/theme-provider";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import { SITE_NAME, SITE_URL } from "./lib/blog";
 import "./globals.css";
 
-const source_code_pro = Fira_Code({ weight: "400", subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  weight: ["400", "500"],
+  subsets: ["latin"],
+  variable: "--font-mono",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -37,16 +45,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={source_code_pro.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+    <html lang="en">
+      <body
+        className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`}
+      >
+        {children}
       </body>
     </html>
   );

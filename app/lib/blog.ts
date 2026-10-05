@@ -130,16 +130,15 @@ export function getPostBySlug(slug: string): BlogPost | null {
   }
 }
 
-export function getAllPosts(): BlogPostMeta[] {
+export function getAllPostsWithContent(): BlogPost[] {
   return getPostSlugs()
-    .map((slug) => {
-      const post = getPostBySlug(slug);
-      if (!post) return null;
-      const { content: _content, ...meta } = post;
-      return meta;
-    })
-    .filter((post): post is BlogPostMeta => post !== null)
+    .map((slug) => getPostBySlug(slug))
+    .filter((post): post is BlogPost => post !== null)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
+
+export function getAllPosts(): BlogPostMeta[] {
+  return getAllPostsWithContent().map(({ content: _content, ...meta }) => meta);
 }
 
 export function buildBlogPostingJsonLd(post: BlogPostMeta) {

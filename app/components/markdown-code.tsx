@@ -2,7 +2,6 @@
 
 import type { ReactNode } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 const LANGUAGE_ALIASES: Record<string, string> = {
   js: "javascript",
@@ -30,7 +29,7 @@ export default function MarkdownCode({
 
   if (!isBlock) {
     return (
-      <code className="bg-yellow-200 dark:bg-pink-300/50 px-1.5 py-0.5 rounded text-md font-mono">
+      <code className="rounded-[6px] bg-[var(--inline-code-bg)] px-1.5 py-0.5 font-mono text-[0.875em] font-medium text-[var(--inline-code-fg)]">
         {children}
       </code>
     );
@@ -42,20 +41,9 @@ export default function MarkdownCode({
   return (
     <SyntaxHighlighter
       language={language}
-      style={oneDark}
+      useInlineStyles={false}
       PreTag="div"
-      customStyle={{
-        margin: "0 0 1rem",
-        borderRadius: "0.5rem",
-        fontSize: "0.875rem",
-        lineHeight: 1.6,
-      }}
-      codeTagProps={{
-        style: {
-          fontFamily:
-            "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
-        },
-      }}
+      className="code-block my-6 overflow-x-auto rounded-xl border border-[var(--code-border)] bg-[var(--code-bg)] p-5 font-mono text-sm leading-relaxed text-[var(--code-fg)]"
     >
       {raw}
     </SyntaxHighlighter>

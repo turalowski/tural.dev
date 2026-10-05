@@ -5,6 +5,8 @@ declare module "react-syntax-highlighter" {
     language?: string;
     style?: Record<string, CSSProperties>;
     customStyle?: CSSProperties;
+    className?: string;
+    useInlineStyles?: boolean;
     codeTagProps?: {
       style?: CSSProperties;
       className?: string;
