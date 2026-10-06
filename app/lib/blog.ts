@@ -6,7 +6,7 @@ export const SITE_URL = "https://tural.dev";
 export const SITE_NAME = "Tural Hajiyev";
 export const DEFAULT_AUTHOR = "Tural Hajiyev";
 
-const POSTS_DIR = path.join(process.cwd(), "public", "blog", "posts");
+export const POSTS_DIR = path.join(process.cwd(), "public", "blog", "posts");
 
 export interface BlogPostMeta {
   slug: string;
