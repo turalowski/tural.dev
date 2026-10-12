@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import MarkdownCode from "@/app/components/markdown-code";
@@ -23,31 +24,38 @@ interface PostBodyProps {
   content: string;
 }
 
+type HeadingTag = "h1" | "h2" | "h3" | "h4" | "h5";
+
 export default function PostBody({ slug, content }: PostBodyProps) {
+  // Repeated heading texts get a numeric suffix so every id stays unique.
+  const seen = new Map<string, number>();
+
+  const heading = (Tag: HeadingTag, className: string) =>
+    function Heading({ node, children }: { node?: unknown; children?: ReactNode }) {
+      const base = `${slug}--${slugify(hastText(node as HastNode | undefined))}`;
+      const count = seen.get(base) ?? 0;
+      seen.set(base, count + 1);
+      return (
+        <Tag
+          id={count ? `${base}-${count}` : base}
+          className={`${className} text-foreground scroll-mt-20`}
+        >
+          {children}
+        </Tag>
+      );
+    };
+
   return (
     <div className="max-w-none">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
-          h1: ({ children }) => (
-            <h1 className="text-3xl font-bold tracking-tight mt-12 mb-4 text-foreground">
-              {children}
-            </h1>
-          ),
-          // Section ids feed the "In this article" list in the blog navigator.
-          h2: ({ node, children }) => (
-            <h2
-              id={`${slug}--${slugify(hastText(node as HastNode | undefined))}`}
-              className="text-2xl font-semibold tracking-tight mt-12 mb-4 text-foreground scroll-mt-20"
-            >
-              {children}
-            </h2>
-          ),
-          h3: ({ children }) => (
-            <h3 className="text-xl font-semibold tracking-tight mt-8 mb-3 text-foreground">
-              {children}
-            </h3>
-          ),
+          // Heading ids feed the section list in the blog navigator.
+          h1: heading("h1", "text-3xl font-bold tracking-tight mt-12 mb-4"),
+          h2: heading("h2", "text-2xl font-semibold tracking-tight mt-12 mb-4"),
+          h3: heading("h3", "text-xl font-semibold tracking-tight mt-8 mb-3"),
+          h4: heading("h4", "text-lg font-semibold mt-6 mb-2"),
+          h5: heading("h5", "text-base font-semibold mt-6 mb-2"),
 
           p: ({ children }) => (
             <p className="mb-6 text-[1.0625rem] leading-[1.8]">{children}</p>

@@ -16,7 +16,10 @@ export interface NavigatorPost {
 interface Heading {
   id: string;
   text: string;
+  level: number;
 }
+
+const HEADING_SELECTOR = "h1[id], h2[id], h3[id], h4[id], h5[id]";
 
 interface BlogNavigatorProps {
   posts: NavigatorPost[];
@@ -49,14 +52,18 @@ export default function BlogNavigator({ posts, children }: BlogNavigatorProps) {
   useEffect(() => {
     const articles = posts.map((post) => document.getElementById(post.slug));
     const headingEls = articles.map((article) =>
-      article ? Array.from(article.querySelectorAll<HTMLElement>("h2[id]")) : [],
+      article ? Array.from(article.querySelectorAll<HTMLElement>(HEADING_SELECTOR)) : [],
     );
 
     setHeadings(
       Object.fromEntries(
         posts.map((post, i) => [
           post.slug,
-          headingEls[i].map((el) => ({ id: el.id, text: el.textContent ?? "" })),
+          headingEls[i].map((el) => ({
+            id: el.id,
+            text: el.textContent ?? "",
+            level: Number(el.tagName[1]),
+          })),
         ]),
       ),
     );
@@ -124,6 +131,8 @@ export default function BlogNavigator({ posts, children }: BlogNavigatorProps) {
   }, [menuOpen]);
 
   const activeHeadings = activePost ? headings[activePost.slug] ?? [] : [];
+  // Indent relative to the article's top-most heading level.
+  const minLevel = Math.min(...activeHeadings.map((h) => h.level));
 
   const navigate = (id: string, updateHash = false) => {
     setMenuOpen(false);
@@ -232,8 +241,9 @@ export default function BlogNavigator({ posts, children }: BlogNavigatorProps) {
                             e.preventDefault();
                             navigate(heading.id);
                           }}
+                          style={{ paddingLeft: `${0.75 + (heading.level - minLevel) * 0.75}rem` }}
                           className={cn(
-                            "-ml-px block border-l py-0.5 pl-3 text-xs leading-snug transition-colors",
+                            "-ml-px block border-l py-0.5 text-xs leading-snug transition-colors",
                             heading.id === activeHeadingId
                               ? "border-brand text-brand"
                               : "border-transparent text-muted-foreground hover:text-foreground",
