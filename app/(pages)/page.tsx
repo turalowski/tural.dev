@@ -11,6 +11,7 @@ import {
   SITE_URL,
 } from "@/app/lib/blog";
 import { isUnlocked } from "@/app/lib/unlock";
+import UnlockShortcut from "../components/unlock-shortcut";
 
 export const metadata: Metadata = {
   title: {
@@ -80,6 +81,7 @@ export default async function BlogPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <UnlockShortcut />
       <header className="flex items-center justify-between gap-4 pb-3 lg:mb-14 lg:border-b lg:pb-4">
         <div className="flex min-w-0 flex-wrap items-baseline gap-x-2">
           <h1 className="text-base font-semibold tracking-tight text-foreground">
