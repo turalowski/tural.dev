@@ -23,6 +23,7 @@ export async function generateStaticParams() {
   return getPostSlugs()
     .map((slug) => getPostBySlug(slug))
     .filter((post): post is NonNullable<typeof post> => post !== null)
+    .filter((post) => !post.hidden)
     .map((post) => ({ slug: post.slug }));
 }
 
@@ -31,7 +32,7 @@ export async function generateMetadata({
 }: BlogPostPageProps): Promise<Metadata> {
   const post = getPostBySlug(params.slug);
 
-  if (!post) {
+  if (!post || post.hidden) {
     return {
       title: "Post Not Found",
       robots: { index: false, follow: false },
@@ -59,8 +60,7 @@ export async function generateMetadata({
       url,
       locale: ogLocale,
       siteName: SITE_NAME,
-      publishedTime: post.date,
-      modifiedTime: post.updated ?? post.date,
+      ...(post.updated ? { modifiedTime: post.updated } : {}),
       tags: post.tags,
       authors: [post.author],
       ...(imageUrl
@@ -87,7 +87,7 @@ export async function generateMetadata({
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const post = getPostBySlug(params.slug);
 
-  if (!post) {
+  if (!post || post.hidden) {
     notFound();
   }
 
@@ -112,15 +112,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <h1 className="text-3xl font-bold tracking-tight leading-tight mb-2 sm:text-4xl text-foreground">
           {post.title}
         </h1>
-        <div className="flex items-center gap-3 mb-1">
-          <span className="text-xs text-muted-foreground">
-            {new Date(post.date).toLocaleDateString(undefined, {
-              year: "numeric",
-              month: "short",
-              day: "numeric",
-            })}
-          </span>
-        </div>
       </header>
 
       <PostBody slug={post.slug} content={post.content} />

@@ -1,7 +1,7 @@
 ---
 title: "Monolith, Monorepo, or Microfrontends?"
 excerpt: "Monoliths are simple, monorepos keep projects organized, and most teams don't need microfrontends."
-date: "2026-03-04"
+order: 1
 tags:
   [
     "Architecture",
@@ -20,7 +20,7 @@ Discussions about frontend architecture often include suggestions to use microfr
 
 **Here's my core takeaway:**
 
-Microfrontends are designed to let completely independent teams deploy their features separately from each other. This only makes sense if you are at a large company with distinct, siloed teams. Most organizations don't need this level of separation. The popularity of microfrontends has more to do with the appeal of new trends than with solving everyday problems.
+> Microfrontends are designed to let completely independent teams deploy their features separately from each other. This only makes sense if you are at a large company with distinct, siloed teams. Most organizations don't need this level of separation. The popularity of microfrontends has more to do with the appeal of new trends than with solving everyday problems.
 
 A lot of confusion comes from treating these ideas as a single decision, when in reality they're separate:
 

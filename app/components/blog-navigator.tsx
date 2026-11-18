@@ -8,7 +8,6 @@ import { cn } from "@/app/lib/utils";
 export interface NavigatorPost {
   slug: string;
   title: string;
-  date: string;
   tags: string[];
   category?: string;
 }
@@ -28,15 +27,6 @@ interface BlogNavigatorProps {
 
 // An article/section becomes active once its top crosses this fraction of the viewport.
 const READING_LINE = 0.3;
-
-function formatDate(date: string) {
-  return new Date(date).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    timeZone: "UTC",
-  });
-}
 
 function scrollToId(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -151,10 +141,11 @@ export default function BlogNavigator({ posts, children }: BlogNavigatorProps) {
         <p className="text-sm font-semibold leading-snug text-foreground">
           {activePost.title}
         </p>
-        <p className="mt-1 text-xs text-muted-foreground">
-          {formatDate(activePost.date)}
-          {activePost.category ? ` · ${activePost.category}` : ""}
-        </p>
+        {activePost.category && (
+          <p className="mt-1 text-xs text-muted-foreground">
+            {activePost.category}
+          </p>
+        )}
       </div>
 
       {activePost.tags.length > 0 && (
@@ -215,9 +206,6 @@ export default function BlogNavigator({ posts, children }: BlogNavigatorProps) {
                   aria-current={isActive ? "true" : undefined}
                   className="group block"
                 >
-                  <span className="block text-[11px] text-muted-foreground">
-                    {formatDate(post.date)}
-                  </span>
                   <span
                     className={cn(
                       "block text-[13px] leading-snug transition-colors",

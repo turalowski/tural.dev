@@ -1,7 +1,7 @@
 ---
 title: "React Project Folder Structure — Patterns for Scalable Frontend Apps"
 excerpt: "A comparison of type-based and feature-based project folder structures."
-date: "2026-06-18"
+order: 2
 tags:
   - "React"
   - "Architecture"
@@ -10,7 +10,6 @@ tags:
   - "Web Development"
   - "type-based folder structure"
   - "Feature-based folder structure"
-  - "Feature-Sliced Design (FSD)"
 author: "Tural Hajiyev"
 locale: "en"
 category: "Frontend architecture"
@@ -91,9 +90,3 @@ Secondly, if not managed carefully, some logic might get duplicated across featu
 Finally, if you have work which covers all components or all hooks, this structure is less predictable by type. It means if you need to check all components, you need to visit each feature's components folder instead of having a single components folder.
 
 Feature-based folder structure is ideal for most medium sized projects. For large projects, sometimes it raises questions as mentioned before, like should features only use code in the `shared` folder, or is it okay for one feature to directly import code from another? What if the trade module has a small feature that after a trade operation, it's required to call a finance operation? Without clear rules, you can accidentally create tangled dependencies between features and suddenly lose the main benefit this structure brings. In addition, over time, a single feature folder can become bloated as new components, hooks, and logic are added. It's not always obvious when a feature has grown too large and should be split up into smaller sub-features or reorganized for clarity.
-
-## What about Feature-Sliced Design (FSD)?
-
-You might have heard about Feature-Sliced Design (FSD). It's a relatively new, layered architectural approach that's gaining popularity for organizing large-scale frontends. FSD introduces concepts like "layers" (app, pages, widgets, features, entities, shared) and "slices" for domain grouping, and enforces clear, strict boundaries between them.
-
-I haven't used Feature-Sliced Design (FSD) in a production project myself yet. I'm still learning about it and exploring how it works.

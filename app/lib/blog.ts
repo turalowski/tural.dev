@@ -13,7 +13,8 @@ export interface BlogPostMeta {
   title: string;
   excerpt: string;
   description: string;
-  date: string;
+  order: number;
+  hidden: boolean;
   updated?: string;
   tags: string[];
   author: string;
@@ -45,9 +46,10 @@ function parseFrontmatter(
 ): BlogPostMeta | null {
   const title = typeof data.title === "string" ? data.title : null;
   const excerpt = typeof data.excerpt === "string" ? data.excerpt : null;
-  const date = typeof data.date === "string" ? data.date : null;
+  if (!title || !excerpt) return null;
 
-  if (!title || !excerpt || !date) return null;
+  const order =
+    typeof data.order === "number" ? data.order : Number.POSITIVE_INFINITY;
 
   const description =
     typeof data.description === "string" ? data.description : excerpt;
@@ -60,7 +62,8 @@ function parseFrontmatter(
     title,
     excerpt,
     description,
-    date,
+    order,
+    hidden: data.hidden === true,
     updated: typeof data.updated === "string" ? data.updated : undefined,
     tags,
     author: typeof data.author === "string" ? data.author : DEFAULT_AUTHOR,
@@ -130,11 +133,14 @@ export function getPostBySlug(slug: string): BlogPost | null {
   }
 }
 
-export function getAllPostsWithContent(): BlogPost[] {
+export function getAllPostsWithContent({
+  includeHidden = false,
+}: { includeHidden?: boolean } = {}): BlogPost[] {
   return getPostSlugs()
     .map((slug) => getPostBySlug(slug))
     .filter((post): post is BlogPost => post !== null)
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    .filter((post) => includeHidden || !post.hidden)
+    .sort((a, b) => a.order - b.order || a.title.localeCompare(b.title));
 }
 
 export function getAllPosts(): BlogPostMeta[] {
@@ -150,10 +156,7 @@ export function buildBlogPostingJsonLd(post: BlogPostMeta) {
     "@type": "BlogPosting",
     headline: post.title,
     description: post.description,
-    datePublished: post.date,
-    ...(post.updated
-      ? { dateModified: post.updated }
-      : { dateModified: post.date }),
+    ...(post.updated ? { dateModified: post.updated } : {}),
     author: {
       "@type": "Person",
       name: post.author,

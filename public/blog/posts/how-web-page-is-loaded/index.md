@@ -1,7 +1,7 @@
 ---
 title: "How a Web Page Loads HTML, CSS, and JS Content"
 excerpt: "What happens between typing a URL and seeing the page"
-date: "2025-04-10"
+order: 4
 tags:
   - "Web Development"
   - "Browser Internals"

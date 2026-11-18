@@ -2,7 +2,7 @@
 # Required
 title: "Your Post Title — Clear, Specific, Under ~60 Characters"
 excerpt: "1–2 sentence summary shown on the home page and used as the meta description. Aim for 140–160 characters; front-load the main keyword."
-date: "2026-07-17" # ISO date: YYYY-MM-DD
+order: 99 # Position in the reading order (ascending)
 tags:
   - "Primary Topic" # 3–6 tags
   - "Secondary Topic"

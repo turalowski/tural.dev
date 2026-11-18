@@ -1,7 +1,8 @@
 ---
 title: "Git CheatSheet"
 excerpt: "Quick review topics about Git"
-date: "1999-09-19"
+order: 7
+hidden: true
 tags:
   - "Git"
   - "Version Control"

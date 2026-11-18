@@ -10,6 +10,7 @@ import {
   SITE_NAME,
   SITE_URL,
 } from "@/app/lib/blog";
+import { isUnlocked } from "@/app/lib/unlock";
 
 export const metadata: Metadata = {
   title: {
@@ -47,7 +48,9 @@ export const metadata: Metadata = {
 const HIDE_POSTS = false; // Set to true to hide all posts
 
 export default async function BlogPage() {
-  const posts = HIDE_POSTS ? [] : getAllPostsWithContent();
+  const posts = HIDE_POSTS
+    ? []
+    : getAllPostsWithContent({ includeHidden: isUnlocked() });
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -61,11 +64,12 @@ export default async function BlogPage() {
       name: SITE_NAME,
       url: SITE_URL,
     },
-    blogPost: posts.map((post) => ({
+    blogPost: posts
+      .filter((post) => !post.hidden)
+      .map((post) => ({
       "@type": "BlogPosting",
       headline: post.title,
       description: post.description,
-      datePublished: post.date,
       url: `${SITE_URL}/blog/${post.slug}`,
     })),
   };
@@ -95,10 +99,9 @@ export default async function BlogPage() {
         </Link>
       </header>
       <BlogNavigator
-        posts={posts.map(({ slug, title, date, tags, category }) => ({
+        posts={posts.map(({ slug, title, tags, category }) => ({
           slug,
           title,
-          date,
           tags,
           category,
         }))}
@@ -110,14 +113,7 @@ export default async function BlogPage() {
             className={cn("scroll-mt-16", i > 0 && "mt-16 border-t pt-16 sm:mt-20 sm:pt-20")}
           >
             <header className="mb-8 sm:mb-10">
-              <span className="text-sm text-muted-foreground">
-                {new Date(post.date).toLocaleDateString(undefined, {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                })}
-              </span>
-              <h2 className="mt-2 text-3xl font-bold tracking-tight leading-tight sm:text-4xl text-foreground">
+              <h2 className="text-3xl font-bold tracking-tight leading-tight sm:text-4xl text-foreground">
                 {post.title}
               </h2>
             </header>
