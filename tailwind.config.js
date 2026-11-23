@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: [
     './app/**/*.{ts,tsx}',
 	],
@@ -21,6 +22,7 @@ module.exports = {
   				DEFAULT: 'hsl(var(--brand) / <alpha-value>)',
   				hover: 'hsl(var(--brand-hover) / <alpha-value>)'
   			},
+  			prose: 'hsl(var(--prose))',
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',

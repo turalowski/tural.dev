@@ -10,6 +10,7 @@ import {
 } from "@/app/lib/blog";
 import { isUnlocked } from "@/app/lib/unlock";
 import UnlockShortcut from "../components/unlock-shortcut";
+import ThemeToggle from "../components/theme-toggle";
 
 export const metadata: Metadata = {
   title: {
@@ -82,21 +83,24 @@ export default async function BlogPage() {
       <UnlockShortcut />
       <header className="flex items-center justify-between gap-4 mb-8 border-b pb-4">
         <div className="flex min-w-0 flex-wrap items-baseline gap-x-2">
-          <h1 className="text-base font-semibold tracking-tight text-foreground">
+          <h1 className="text-lg font-bold tracking-tight text-foreground">
             Tural Hajiyev
           </h1>
           <p className="text-sm text-muted-foreground">Frontend Engineer</p>
         </div>
-        <Link
-          href="https://github.com/turalowski"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Button variant="outline" size="icon">
-            <GitHubLogoIcon className="h-4 w-4" />
-            <span className="sr-only">GitHub</span>
-          </Button>
-        </Link>
+        <div className="flex shrink-0 items-center gap-2">
+          <ThemeToggle />
+          <Link
+            href="https://github.com/turalowski"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button variant="outline" size="icon">
+              <GitHubLogoIcon className="h-4 w-4" />
+              <span className="sr-only">GitHub</span>
+            </Button>
+          </Link>
+        </div>
       </header>
       <LegacyHashRedirect
         slugs={posts.filter((post) => !post.hidden).map((post) => post.slug)}

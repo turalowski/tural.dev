@@ -51,22 +51,22 @@ export default function PostBody({ slug, content }: PostBodyProps) {
         remarkPlugins={[remarkGfm]}
         components={{
           // Heading ids feed the section list in the blog navigator.
-          h1: heading("h1", "text-3xl font-bold tracking-tight mt-12 mb-4"),
-          h2: heading("h2", "text-2xl font-semibold tracking-tight mt-12 mb-4"),
-          h3: heading("h3", "text-xl font-semibold tracking-tight mt-8 mb-3"),
-          h4: heading("h4", "text-lg font-semibold mt-6 mb-2"),
-          h5: heading("h5", "text-base font-semibold mt-6 mb-2"),
+          h1: heading("h1", "text-[2.25rem] font-bold leading-tight tracking-[-0.02em] mt-12 mb-5"),
+          h2: heading("h2", "text-[1.875rem] font-bold leading-[1.25] tracking-[-0.015em] mt-14 mb-5"),
+          h3: heading("h3", "text-2xl font-bold leading-snug tracking-[-0.01em] mt-10 mb-3"),
+          h4: heading("h4", "text-xl font-bold mt-8 mb-2"),
+          h5: heading("h5", "text-lg font-bold mt-6 mb-2"),
 
           p: ({ children }) => (
-            <p className="mb-6 text-[1.0625rem] leading-[1.8]">{children}</p>
+            <p className="mb-5 text-[1.125rem] leading-[1.6] text-prose">{children}</p>
           ),
           ul: ({ children }) => (
-            <ul className="text-[1.0625rem] leading-[1.8] list-disc pl-6 mb-6 space-y-2">
+            <ul className="text-[1.125rem] leading-[1.6] text-prose list-disc marker:text-brand/60 pl-6 mb-5 space-y-1">
               {children}
             </ul>
           ),
           ol: ({ children }) => (
-            <ol className="text-[1.0625rem] leading-[1.8] list-decimal pl-6 mb-6 space-y-2">
+            <ol className="text-[1.125rem] leading-[1.6] text-prose list-decimal marker:font-semibold marker:text-brand/70 pl-6 mb-5 space-y-1">
               {children}
             </ol>
           ),
@@ -74,17 +74,39 @@ export default function PostBody({ slug, content }: PostBodyProps) {
           a: ({ href, children }) => (
             <a
               href={href}
-              className="font-medium text-brand underline decoration-brand/30 underline-offset-4 transition-colors hover:text-brand-hover hover:decoration-brand-hover"
+              className="font-semibold text-brand underline decoration-brand/30 underline-offset-4 transition-colors hover:text-brand-hover hover:decoration-brand-hover"
             >
               {children}
             </a>
           ),
           code: MarkdownCode,
           blockquote: ({ children }) => (
-            <blockquote className="my-8 border-l-2 border-brand pl-5 text-muted-foreground">
+            <blockquote className="my-8 rounded-2xl border border-brand/15 bg-brand/[0.04] px-6 py-5 text-muted-foreground shadow-sm shadow-brand/5">
               {children}
             </blockquote>
           ),
+          // Wrapper clips the rounded corners and scrolls on narrow screens.
+          table: ({ children }) => (
+            <div className="my-8 overflow-x-auto rounded-2xl border border-border shadow-sm">
+              <table className="w-full border-collapse text-[0.9375rem]">
+                {children}
+              </table>
+            </div>
+          ),
+          thead: ({ children }) => (
+            <thead className="bg-brand/[0.06] text-foreground">{children}</thead>
+          ),
+          th: ({ children }) => (
+            <th className="whitespace-nowrap px-4 py-3 text-left font-semibold">
+              {children}
+            </th>
+          ),
+          tr: ({ children }) => (
+            <tr className="border-t border-border/70 transition-colors first:border-t-0 hover:bg-secondary">
+              {children}
+            </tr>
+          ),
+          td: ({ children }) => <td className="px-4 py-3">{children}</td>,
           strong: ({ children }) => (
             <strong className="font-semibold text-foreground">{children}</strong>
           ),
