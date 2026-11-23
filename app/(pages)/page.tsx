@@ -2,11 +2,9 @@ import Link from "next/link";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { Metadata } from "next";
 import { Button } from "../components/ui/button";
-import BlogNavigator from "../components/blog-navigator";
-import PostBody from "../components/post-body";
-import { cn } from "@/app/lib/utils";
+import LegacyHashRedirect from "../components/legacy-hash-redirect";
 import {
-  getAllPostsWithContent,
+  getAllPosts,
   SITE_NAME,
   SITE_URL,
 } from "@/app/lib/blog";
@@ -51,7 +49,7 @@ const HIDE_POSTS = false; // Set to true to hide all posts
 export default async function BlogPage() {
   const posts = HIDE_POSTS
     ? []
-    : getAllPostsWithContent({ includeHidden: isUnlocked() });
+    : getAllPosts({ includeHidden: isUnlocked() });
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -76,13 +74,13 @@ export default async function BlogPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-6 max-w-[70rem]">
+    <div className="container mx-auto px-4 py-6 max-w-[50rem]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <UnlockShortcut />
-      <header className="flex items-center justify-between gap-4 pb-3 lg:mb-14 lg:border-b lg:pb-4">
+      <header className="flex items-center justify-between gap-4 mb-8 border-b pb-4">
         <div className="flex min-w-0 flex-wrap items-baseline gap-x-2">
           <h1 className="text-base font-semibold tracking-tight text-foreground">
             Tural Hajiyev
@@ -100,29 +98,33 @@ export default async function BlogPage() {
           </Button>
         </Link>
       </header>
-      <BlogNavigator
-        posts={posts.map(({ slug, title, tags, category }) => ({
-          slug,
-          title,
-          tags,
-          category,
-        }))}
-      >
-        {posts.map((post, i) => (
-          <article
-            key={post.slug}
-            id={post.slug}
-            className={cn("scroll-mt-16", i > 0 && "mt-16 border-t pt-16 sm:mt-20 sm:pt-20")}
-          >
-            <header className="mb-8 sm:mb-10">
-              <h2 className="text-3xl font-bold tracking-tight leading-tight sm:text-4xl text-foreground">
+      <LegacyHashRedirect
+        slugs={posts.filter((post) => !post.hidden).map((post) => post.slug)}
+      />
+      <ul className="divide-y">
+        {posts.map((post) => (
+          <li key={post.slug}>
+            <Link
+              href={`/${post.hidden ? "hidden" : "blog"}/${post.slug}`}
+              className="group flex items-baseline justify-between gap-4 py-3"
+            >
+              <span className="text-sm text-foreground group-hover:text-brand transition-colors">
                 {post.title}
-              </h2>
-            </header>
-            <PostBody slug={post.slug} content={post.content} />
-          </article>
+                {post.hidden && (
+                  <span className="ml-2 text-xs text-muted-foreground">
+                    (hidden)
+                  </span>
+                )}
+              </span>
+              {post.category && (
+                <span className="shrink-0 text-xs text-muted-foreground">
+                  {post.category}
+                </span>
+              )}
+            </Link>
+          </li>
         ))}
-      </BlogNavigator>
+      </ul>
       <footer className="mt-16 border-t pt-6 text-xs text-center text-muted-foreground">
         <p>
           <span role="img" aria-label="robot">

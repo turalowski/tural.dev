@@ -2,7 +2,7 @@
 # Required
 title: "Your Post Title — Clear, Specific, Under ~60 Characters"
 excerpt: "1–2 sentence summary shown on the home page and used as the meta description. Aim for 140–160 characters; front-load the main keyword."
-order: 99 # Position in the reading order (ascending)
+order: 99 # Higher = newer; posts are listed highest first
 tags:
   - "Primary Topic" # 3–6 tags
   - "Secondary Topic"

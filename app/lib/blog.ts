@@ -140,11 +140,13 @@ export function getAllPostsWithContent({
     .map((slug) => getPostBySlug(slug))
     .filter((post): post is BlogPost => post !== null)
     .filter((post) => includeHidden || !post.hidden)
-    .sort((a, b) => a.order - b.order || a.title.localeCompare(b.title));
+    .sort((a, b) => b.order - a.order || a.title.localeCompare(b.title));
 }
 
-export function getAllPosts(): BlogPostMeta[] {
-  return getAllPostsWithContent().map(({ content: _content, ...meta }) => meta);
+export function getAllPosts(
+  options: { includeHidden?: boolean } = {},
+): BlogPostMeta[] {
+  return getAllPostsWithContent(options).map(({ content: _content, ...meta }) => meta);
 }
 
 export function buildBlogPostingJsonLd(post: BlogPostMeta) {
