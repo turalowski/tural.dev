@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Figtree, Source_Code_Pro } from "next/font/google";
 import { SITE_NAME, SITE_URL } from "./lib/blog";
 import PostsHotReload from "./components/posts-hot-reload";
-import { themeInitScript } from "./lib/theme";
 import "./globals.css";
 
 const figtree = Figtree({
@@ -47,11 +46,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    // The init script adds the `dark` class before hydration.
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-      </head>
+    <html lang="en">
       <body
         className={`${figtree.variable} ${sourceCodePro.variable} font-sans antialiased`}
       >

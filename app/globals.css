@@ -5,7 +5,7 @@
 @layer base {
   /* react.dev-inspired palette. HSL triplets feed Tailwind; code colors are used as-is. */
   :root {
-    --background: 0 0% 100%; /* #FFFFFF */
+    --background: 45 33% 98%; /* #FBFAF7 */
     --foreground: 220 15% 16%; /* #23272F */
     --prose: 221 15% 29%; /* #404756, article body text */
     --card: 0 0% 100%;
@@ -22,17 +22,17 @@
     --accent-foreground: 220 15% 16%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
-    --border: 228 14% 93%; /* #EBECF0 */
+    --border: 44 17% 84%; /* #DCD9D0, warm line for the cream page */
     --input: 228 14% 90%;
     --ring: 195 91% 34%;
     --brand: 195 91% 34%; /* #087EA4, accent & links */
     --brand-hover: 195 91% 27%;
     --radius: 0.5rem;
 
-    --inline-code-bg: rgba(153, 161, 179, 0.16);
-    --inline-code-fg: #23272f;
-    --code-bg: #f6f7f9;
-    --code-border: #ebecf0;
+    --inline-code-bg: #ebe7dc;
+    --inline-code-fg: #1d1d1b;
+    --code-bg: #ffffff;
+    --code-border: #dcd9d0;
     --code-fg: #23272f;
     --code-keyword: #9333ea;
     --code-function: #087ea4;

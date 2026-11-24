@@ -10,7 +10,6 @@ import {
 } from "@/app/lib/blog";
 import { isUnlocked } from "@/app/lib/unlock";
 import UnlockShortcut from "../components/unlock-shortcut";
-import ThemeToggle from "../components/theme-toggle";
 
 export const metadata: Metadata = {
   title: {
@@ -89,7 +88,6 @@ export default async function BlogPage() {
           <p className="text-base text-muted-foreground">Frontend Engineer</p>
         </div>
         <div className="flex shrink-0 items-center gap-2">
-          <ThemeToggle />
           <Link
             href="https://github.com/turalowski"
             target="_blank"

@@ -28,8 +28,8 @@ interface PostBodyProps {
 }
 
 const ANSWER_STYLES: Record<string, string> = {
-  yes: "bg-emerald-50 text-emerald-600 dark:bg-emerald-400/10 dark:text-emerald-300/90",
-  no: "bg-rose-50 text-rose-500 dark:bg-rose-400/10 dark:text-rose-300/90",
+  yes: "bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-300/90",
+  no: "bg-rose-100 text-rose-700 dark:bg-rose-400/10 dark:text-rose-300/90",
 };
 
 // Position of a column in the first markdown table header that has it, or -1.
@@ -112,7 +112,7 @@ export default function PostBody({ slug, content, features = {} }: PostBodyProps
           // Wrapper clips the rounded corners and scrolls on narrow screens.
           table: ({ children }) => {
             const table = (
-              <div className="my-8 overflow-x-auto rounded-2xl border border-border shadow-sm">
+              <div className="my-8 overflow-x-auto rounded-2xl border border-border bg-card shadow-sm">
                 <table className="w-full border-collapse text-[0.9375rem]">
                   {children}
                 </table>
@@ -131,7 +131,7 @@ export default function PostBody({ slug, content, features = {} }: PostBodyProps
             );
           },
           thead: ({ children }) => (
-            <thead className="bg-brand/[0.06] text-foreground">{children}</thead>
+            <thead className="bg-brand/[0.08] text-foreground">{children}</thead>
           ),
           th: ({ children }) => (
             <th className="whitespace-nowrap px-4 py-3 text-left font-semibold">

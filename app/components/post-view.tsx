@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import PostBody from "@/app/components/post-body";
-import ThemeToggle from "@/app/components/theme-toggle";
 import type { BlogPost } from "@/app/lib/blog";
 import { getPostFeatures } from "@/app/lib/post-features";
 
@@ -16,7 +15,6 @@ export default function PostView({ post }: { post: BlogPost }) {
           <ArrowLeftIcon className="mr-2 h-4 w-4" />
           Back to all posts
         </Link>
-        <ThemeToggle />
       </div>
       <header>
         <h1 className="text-[2.25rem] font-bold tracking-[-0.025em] leading-[1.1] mb-4 sm:text-5xl text-foreground">
