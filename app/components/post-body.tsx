@@ -114,6 +114,15 @@ export default function PostBody({ slug, content }: PostBodyProps) {
           em: ({ children }) => (
             <em className="italic">{children}</em>
           ),
+          img: ({ src, alt }) => (
+            // eslint-disable-next-line @next/next/no-img-element -- GIFs from markdown, no fixed size
+            <img
+              src={src}
+              alt={alt ?? ""}
+              loading="lazy"
+              className="my-2 w-full rounded-2xl border border-border shadow-sm"
+            />
+          ),
 
           // SyntaxHighlighter owns the block chrome; avoid a nested <pre>.
           pre: ({ children }) => <>{children}</>,

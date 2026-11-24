@@ -83,10 +83,10 @@ export default async function BlogPage() {
       <UnlockShortcut />
       <header className="flex items-center justify-between gap-4 mb-8 border-b pb-4">
         <div className="flex min-w-0 flex-wrap items-baseline gap-x-2">
-          <h1 className="text-lg font-bold tracking-tight text-foreground">
+          <h1 className="text-xl font-bold tracking-tight text-foreground">
             Tural Hajiyev
           </h1>
-          <p className="text-sm text-muted-foreground">Frontend Engineer</p>
+          <p className="text-base text-muted-foreground">Frontend Engineer</p>
         </div>
         <div className="flex shrink-0 items-center gap-2">
           <ThemeToggle />
@@ -112,16 +112,16 @@ export default async function BlogPage() {
               href={`/${post.hidden ? "hidden" : "blog"}/${post.slug}`}
               className="group flex items-baseline justify-between gap-4 py-3"
             >
-              <span className="text-sm text-foreground group-hover:text-brand transition-colors">
+              <span className="text-base text-foreground group-hover:text-brand transition-colors">
                 {post.title}
                 {post.hidden && (
-                  <span className="ml-2 text-xs text-muted-foreground">
+                  <span className="ml-2 text-sm text-muted-foreground">
                     (hidden)
                   </span>
                 )}
               </span>
               {post.category && (
-                <span className="shrink-0 text-xs text-muted-foreground">
+                <span className="shrink-0 text-sm text-muted-foreground">
                   {post.category}
                 </span>
               )}
@@ -129,7 +129,7 @@ export default async function BlogPage() {
           </li>
         ))}
       </ul>
-      <footer className="mt-16 border-t pt-6 text-xs text-center text-muted-foreground">
+      <footer className="mt-16 border-t pt-6 text-sm text-center text-muted-foreground">
         <p>
           <span role="img" aria-label="robot">
             🤖

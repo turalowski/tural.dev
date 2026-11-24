@@ -44,25 +44,25 @@
 
   .dark {
     color-scheme: dark;
-    --background: 220 15% 16%; /* #23272F */
+    --background: 220 15% 6%; /* #0D0E11 */
     --foreground: 220 20% 97%; /* #F6F7F9 */
     --prose: 225 12% 85%; /* soft light gray for long text */
-    --card: 220 15% 16%;
+    --card: 220 15% 6%;
     --card-foreground: 220 20% 97%;
-    --popover: 220 15% 18%;
+    --popover: 220 15% 9%;
     --popover-foreground: 220 20% 97%;
     --primary: 220 20% 97%;
-    --primary-foreground: 220 15% 16%;
-    --secondary: 220 15% 20%;
+    --primary-foreground: 220 15% 6%;
+    --secondary: 220 15% 11%;
     --secondary-foreground: 220 20% 97%;
-    --muted: 220 15% 20%;
+    --muted: 220 15% 11%;
     --muted-foreground: 222 15% 65%; /* #99A1B3 */
-    --accent: 220 15% 24%;
+    --accent: 220 15% 15%;
     --accent-foreground: 220 20% 97%;
     --destructive: 0 63% 45%;
     --destructive-foreground: 0 0% 98%;
-    --border: 220 15% 24%; /* #343A46 */
-    --input: 220 15% 28%;
+    --border: 220 15% 16%; /* #23272F */
+    --input: 220 15% 20%;
     --ring: 191 65% 60%;
     --brand: 191 65% 60%; /* #58C4DC */
     --brand-hover: 191 70% 72%;
