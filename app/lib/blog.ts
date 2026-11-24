@@ -10,6 +10,8 @@ export const POSTS_DIR = path.join(process.cwd(), "public", "blog", "posts");
 
 export interface BlogPostMeta {
   slug: string;
+  // Unique article id from frontmatter; enables per-article features.
+  id?: string;
   title: string;
   excerpt: string;
   description: string;
@@ -59,6 +61,7 @@ function parseFrontmatter(
 
   return {
     slug,
+    id: typeof data.id === "string" ? data.id : undefined,
     title,
     excerpt,
     description,

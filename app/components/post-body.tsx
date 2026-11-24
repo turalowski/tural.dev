@@ -2,6 +2,8 @@ import type { ReactNode } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import MarkdownCode from "@/app/components/markdown-code";
+import TableFilter from "@/app/components/table-filter";
+import type { PostFeatures } from "@/app/lib/post-features";
 
 type HastNode = { type: string; value?: string; children?: HastNode[] };
 
@@ -22,6 +24,7 @@ function slugify(text: string): string {
 interface PostBodyProps {
   slug: string;
   content: string;
+  features?: PostFeatures;
 }
 
 const ANSWER_STYLES: Record<string, string> = {
@@ -31,7 +34,7 @@ const ANSWER_STYLES: Record<string, string> = {
 
 type HeadingTag = "h1" | "h2" | "h3" | "h4" | "h5";
 
-export default function PostBody({ slug, content }: PostBodyProps) {
+export default function PostBody({ slug, content, features = {} }: PostBodyProps) {
   // Repeated heading texts get a numeric suffix so every id stays unique.
   const seen = new Map<string, number>();
 
@@ -91,13 +94,21 @@ export default function PostBody({ slug, content }: PostBodyProps) {
             </blockquote>
           ),
           // Wrapper clips the rounded corners and scrolls on narrow screens.
-          table: ({ children }) => (
-            <div className="my-8 overflow-x-auto rounded-2xl border border-border shadow-sm">
-              <table className="w-full border-collapse text-[0.9375rem]">
-                {children}
-              </table>
-            </div>
-          ),
+          table: ({ children }) => {
+            const table = (
+              <div className="my-8 overflow-x-auto rounded-2xl border border-border shadow-sm">
+                <table className="w-full border-collapse text-[0.9375rem]">
+                  {children}
+                </table>
+              </div>
+            );
+            // Only articles whose id enables it get filter chips.
+            return features.tableFilterColumn ? (
+              <TableFilter column={features.tableFilterColumn}>{table}</TableFilter>
+            ) : (
+              table
+            );
+          },
           thead: ({ children }) => (
             <thead className="bg-brand/[0.06] text-foreground">{children}</thead>
           ),

@@ -3,6 +3,7 @@ import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import PostBody from "@/app/components/post-body";
 import ThemeToggle from "@/app/components/theme-toggle";
 import type { BlogPost } from "@/app/lib/blog";
+import { getPostFeatures } from "@/app/lib/post-features";
 
 export default function PostView({ post }: { post: BlogPost }) {
   return (
@@ -23,7 +24,11 @@ export default function PostView({ post }: { post: BlogPost }) {
         </h1>
       </header>
 
-      <PostBody slug={post.slug} content={post.content} />
+      <PostBody
+        slug={post.slug}
+        content={post.content}
+        features={getPostFeatures(post.id)}
+      />
       <footer className="mt-10 border-t pt-6 text-xs text-center text-muted-foreground">
         <p>
           <span role="img" aria-label="robot">
