@@ -15,8 +15,6 @@ category: "Languages"
 
 These are 2000 of the most common English words, each with its Polish translation and a short example sentence in Polish (with the English meaning in italics).
 
-Some notes before you start:
-
 | #    | English                 | Polish                         | Example                                                                                         | Type        |
 | ---- | ----------------------- | ------------------------------ | ----------------------------------------------------------------------------------------------- | ----------- |
 | 1    | **the**                 | — (no article in Polish)       | Kot śpi na kanapie. — _The cat is sleeping on the sofa._                                        | Determiner  |
