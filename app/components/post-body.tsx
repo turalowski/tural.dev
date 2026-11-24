@@ -32,11 +32,27 @@ const ANSWER_STYLES: Record<string, string> = {
   no: "bg-rose-50 text-rose-500 dark:bg-rose-400/10 dark:text-rose-300/90",
 };
 
+// Position of a column in the first markdown table header that has it, or -1.
+function markdownColumnIndex(content: string, column: string): number {
+  for (const line of content.split("\n")) {
+    if (!line.trim().startsWith("|")) continue;
+    const cells = line.split("|").slice(1, -1).map((cell) => cell.trim().toLowerCase());
+    const index = cells.indexOf(column.toLowerCase());
+    if (index !== -1) return index;
+  }
+  return -1;
+}
+
 type HeadingTag = "h1" | "h2" | "h3" | "h4" | "h5";
 
 export default function PostBody({ slug, content, features = {} }: PostBodyProps) {
   // Repeated heading texts get a numeric suffix so every id stays unique.
   const seen = new Map<string, number>();
+  // Known on the server, so the hidden column never flashes before hydration.
+  const hiddenColumn =
+    features.tableFilterColumn && features.hideFilterColumn
+      ? markdownColumnIndex(content, features.tableFilterColumn)
+      : -1;
 
   const heading = (Tag: HeadingTag, className: string) =>
     function Heading({ node, children }: { node?: unknown; children?: ReactNode }) {
@@ -104,7 +120,12 @@ export default function PostBody({ slug, content, features = {} }: PostBodyProps
             );
             // Only articles whose id enables it get filter chips.
             return features.tableFilterColumn ? (
-              <TableFilter column={features.tableFilterColumn}>{table}</TableFilter>
+              <TableFilter
+                column={features.tableFilterColumn}
+                hiddenColumnIndex={hiddenColumn}
+              >
+                {table}
+              </TableFilter>
             ) : (
               table
             );

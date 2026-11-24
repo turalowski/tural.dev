@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
 
 // Display order and plural labels for the chips; unknown types go last.
 const TYPE_LABELS: Record<string, string> = {
@@ -19,6 +19,8 @@ const TYPE_LABELS: Record<string, string> = {
 interface TableFilterProps {
   // Header text of the column whose values become filter chips.
   column: string;
+  // 0-based column to hide visually; -1 or undefined keeps every column.
+  hiddenColumnIndex?: number;
   children: ReactNode;
 }
 
@@ -26,7 +28,12 @@ interface TableFilterProps {
  * Wraps a markdown table and adds filter chips built from one column.
  * Rows are hidden in the DOM instead of re-rendered, so 2,000 rows stay fast.
  */
-export default function TableFilter({ column, children }: TableFilterProps) {
+export default function TableFilter({
+  column,
+  hiddenColumnIndex = -1,
+  children,
+}: TableFilterProps) {
+  const scope = useId();
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [values, setValues] = useState<string[]>([]);
   const [selected, setSelected] = useState<string | null>(null);
@@ -88,7 +95,15 @@ export default function TableFilter({ column, children }: TableFilterProps) {
   };
 
   return (
-    <div ref={wrapperRef}>
+    <div ref={wrapperRef} data-table-filter={scope}>
+      {hiddenColumnIndex >= 0 && (
+        // Raw CSS: React would HTML-escape the quotes in a text child.
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `[data-table-filter="${scope}"] tr > :nth-child(${hiddenColumnIndex + 1}) { display: none; }`,
+          }}
+        />
+      )}
       {chips.length > 0 && (
         <div className="mt-8 flex flex-wrap gap-2" role="group" aria-label={`Filter by ${column}`}>
           {chip("All", values.length, null)}
