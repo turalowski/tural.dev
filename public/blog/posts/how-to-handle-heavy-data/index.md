@@ -159,16 +159,23 @@ SELECT * FROM products WHERE id > 40 ORDER BY id LIMIT 20;
 
 Here the main difference is `WHERE id > 40` instead of `OFFSET 40`. The database uses the index and goes directly to the right row, so page 2,000 is as fast as page 1. And if somebody adds or deletes a product, the next page still starts right after the last row the user saw. No duplicates, no skipped rows.
 
+Here is the same Load more example from the offset section, but with a cursor. To keep it readable, the cursor is the plain id instead of an encoded value. The list is sorted by newest first, so `after=49993` means `WHERE id < 49993`. Even after a new product is added, the next rows start right after the last row the user saw:
+
+![Load more with cursor pagination: each click requests the rows after the last loaded id, so a new product added on the server doesn't cause duplicates](/images/heavy-data/load-more-cursor.gif)
+
 The price is flexibility. With a cursor, we can only go to the next (or previous) page. We can't jump to page 57, and usually we don't know the total number of pages. Also the cursor depends on the sort order. If the user sorts by price, the cursor should contain the price and the id together, because many products can have the same price.
 
-| When                                   | Offset | Cursor |
-| -------------------------------------- | ------ | ------ |
-| The user needs page numbers            | yes    | no     |
-| The user needs to jump to any page     | yes    | no     |
-| The dataset is very large              | no     | yes    |
-| Data changes often (feeds, logs, chat) | no     | yes    |
-| Infinite scroll                        | no     | yes    |
-| Simplicity matters more than speed     | yes    | no     |
+There is also page pagination, `GET /products?page=3&limit=20`. It's the same as offset under the hood: the server calculates `offset = (page - 1) * limit`. The only difference is that the client works with page numbers instead of rows, so it can't start from a random row.
+
+| When                                      | Page | Offset | Cursor |
+| ----------------------------------------- | ---- | ------ | ------ |
+| The user needs page numbers               | yes  | yes    | no     |
+| The user needs to jump to any page        | yes  | yes    | no     |
+| The user changes page size while browsing | no   | yes    | yes    |
+| The dataset is very large                 | no   | no     | yes    |
+| Data changes often (feeds, logs, chat)    | no   | no     | yes    |
+| Infinite scroll                           | no   | no     | yes    |
+| Simplicity matters more than speed        | yes  | yes    | no     |
 
 ## Which one to choose?
 

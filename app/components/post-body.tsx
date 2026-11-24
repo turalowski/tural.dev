@@ -24,6 +24,11 @@ interface PostBodyProps {
   content: string;
 }
 
+const ANSWER_STYLES: Record<string, string> = {
+  yes: "bg-emerald-50 text-emerald-600 dark:bg-emerald-400/10 dark:text-emerald-300/90",
+  no: "bg-rose-50 text-rose-500 dark:bg-rose-400/10 dark:text-rose-300/90",
+};
+
 type HeadingTag = "h1" | "h2" | "h3" | "h4" | "h5";
 
 export default function PostBody({ slug, content }: PostBodyProps) {
@@ -106,7 +111,24 @@ export default function PostBody({ slug, content }: PostBodyProps) {
               {children}
             </tr>
           ),
-          td: ({ children }) => <td className="px-4 py-3">{children}</td>,
+          // Cells that are exactly "yes" / "no" render as green / red pills.
+          td: ({ node, children }) => {
+            const value = hastText(node as HastNode | undefined).trim().toLowerCase();
+            const answer = ANSWER_STYLES[value];
+            return (
+              <td className="px-4 py-3">
+                {answer ? (
+                  <span
+                    className={`inline-flex items-center rounded-sm px-2 py-0.5 text-sm font-medium ${answer}`}
+                  >
+                    {children}
+                  </span>
+                ) : (
+                  children
+                )}
+              </td>
+            );
+          },
           strong: ({ children }) => (
             <strong className="font-semibold text-foreground">{children}</strong>
           ),
