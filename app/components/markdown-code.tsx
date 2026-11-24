@@ -29,7 +29,7 @@ export default function MarkdownCode({
 
   if (!isBlock) {
     return (
-      <code className="rounded-[6px] bg-[var(--inline-code-bg)] px-1.5 py-0.5 font-mono text-[0.875em] font-medium text-[var(--inline-code-fg)]">
+      <code className="rounded-lg bg-[var(--inline-code-bg)] px-2 py-0.5 font-mono text-[0.875em] font-medium text-[var(--inline-code-fg)]">
         {children}
       </code>
     );
@@ -42,8 +42,11 @@ export default function MarkdownCode({
     <SyntaxHighlighter
       language={language}
       useInlineStyles={false}
+      // The default codeTagProps inline the Prism light theme (black text, white
+      // text-shadow, Consolas) even with useInlineStyles off; colors come from CSS.
+      codeTagProps={{ className: `language-${language}` }}
       PreTag="div"
-      className="code-block my-6 overflow-x-auto rounded-xl border border-[var(--code-border)] bg-[var(--code-bg)] p-5 font-mono text-sm leading-relaxed text-[var(--code-fg)]"
+      className="code-block my-6 overflow-x-auto rounded-2xl border border-[var(--code-border)] bg-[var(--code-bg)] p-6 shadow-sm font-mono text-sm leading-relaxed text-[var(--code-fg)]"
     >
       {raw}
     </SyntaxHighlighter>

@@ -3,44 +3,82 @@
 @tailwind utilities;
 
 @layer base {
-  /* Slate palette. HSL triplets feed Tailwind; code colors are used as-is. */
+  /* react.dev-inspired palette. HSL triplets feed Tailwind; code colors are used as-is. */
   :root {
     --background: 0 0% 100%; /* #FFFFFF */
-    --foreground: 222 47% 11%; /* #0F172A */
+    --foreground: 220 15% 16%; /* #23272F */
+    --prose: 221 15% 29%; /* #404756, article body text */
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 220 15% 16%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 222 47% 11%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 98%; /* #F8FAFC */
-    --secondary-foreground: 222 47% 11%;
-    --muted: 210 40% 98%;
-    --muted-foreground: 215 19% 35%; /* #475569 */
-    --accent: 210 40% 96%;
-    --accent-foreground: 222 47% 11%;
+    --popover-foreground: 220 15% 16%;
+    --primary: 220 15% 16%;
+    --primary-foreground: 220 20% 97%;
+    --secondary: 220 20% 97%; /* #F6F7F9 */
+    --secondary-foreground: 220 15% 16%;
+    --muted: 220 20% 97%;
+    --muted-foreground: 221 12% 45%; /* #646C7F-ish */
+    --accent: 228 14% 93%;
+    --accent-foreground: 220 15% 16%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 98%;
-    --border: 214 32% 91%; /* #E2E8F0 */
-    --input: 214 32% 91%;
-    --ring: 221 83% 53%;
-    --brand: 221 83% 53%; /* #2563EB — accent & links */
-    --brand-hover: 224 76% 48%; /* #1D4ED8 */
+    --border: 228 14% 93%; /* #EBECF0 */
+    --input: 228 14% 90%;
+    --ring: 195 91% 34%;
+    --brand: 195 91% 34%; /* #087EA4, accent & links */
+    --brand-hover: 195 91% 27%;
     --radius: 0.5rem;
 
-    --inline-code-bg: #eef2ff;
-    --inline-code-fg: #4338ca;
-    --code-bg: #f8fafc;
-    --code-border: #e2e8f0;
-    --code-fg: #0f172a;
+    --inline-code-bg: rgba(153, 161, 179, 0.16);
+    --inline-code-fg: #23272f;
+    --code-bg: #f6f7f9;
+    --code-border: #ebecf0;
+    --code-fg: #23272f;
     --code-keyword: #9333ea;
-    --code-function: #2563eb;
+    --code-function: #087ea4;
     --code-type: #0284c7;
     --code-string: #16a34a;
     --code-number: #d97706;
     --code-comment: #64748b;
   }
 
+  .dark {
+    color-scheme: dark;
+    --background: 220 15% 6%; /* #0D0E11 */
+    --foreground: 220 20% 97%; /* #F6F7F9 */
+    --prose: 225 12% 85%; /* soft light gray for long text */
+    --card: 220 15% 6%;
+    --card-foreground: 220 20% 97%;
+    --popover: 220 15% 9%;
+    --popover-foreground: 220 20% 97%;
+    --primary: 220 20% 97%;
+    --primary-foreground: 220 15% 6%;
+    --secondary: 220 15% 11%;
+    --secondary-foreground: 220 20% 97%;
+    --muted: 220 15% 11%;
+    --muted-foreground: 222 15% 65%; /* #99A1B3 */
+    --accent: 220 15% 15%;
+    --accent-foreground: 220 20% 97%;
+    --destructive: 0 63% 45%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 15% 16%; /* #23272F */
+    --input: 220 15% 20%;
+    --ring: 191 65% 60%;
+    --brand: 191 65% 60%; /* #58C4DC */
+    --brand-hover: 191 70% 72%;
+
+    --inline-code-bg: rgba(153, 161, 179, 0.16);
+    --inline-code-fg: #f6f7f9;
+    --code-bg: #16181d;
+    --code-border: #343a46;
+    --code-fg: #f6f7f9;
+    --code-keyword: #c792ea;
+    --code-function: #82aaff;
+    --code-type: #58c4dc;
+    --code-string: #c3e88d;
+    --code-number: #f78c6c;
+    --code-comment: #99a1b3;
+  }
 }
 
 @layer base {
@@ -49,12 +87,29 @@
   }
   body {
     @apply bg-background text-foreground;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    text-wrap: balance;
+  }
+  p,
+  li {
+    text-wrap: pretty;
   }
 }
+
 
 blockquote {
   p {
     margin: 0 !important;
+  }
+  /* Keep a gap between paragraphs in multi-paragraph quotes. */
+  p + p {
+    margin-top: 0.875rem !important;
   }
 }
 
