@@ -36,7 +36,13 @@ export default function MarkdownCode({
   }
 
   const languageKey = match?.[1]?.toLowerCase() ?? "text";
-  const language = LANGUAGE_ALIASES[languageKey] ?? languageKey;
+  // ```diagram blocks hold box-drawing art (─ │ ┌ ▶). The web mono font's latin
+  // subset lacks those glyphs, so the browser mixes in a fallback font with other
+  // widths and the boxes drift. System mono fonts cover them at a uniform width.
+  const isDiagram = languageKey === "diagram";
+  const language = isDiagram
+    ? "text"
+    : LANGUAGE_ALIASES[languageKey] ?? languageKey;
 
   return (
     <SyntaxHighlighter
@@ -46,7 +52,11 @@ export default function MarkdownCode({
       // text-shadow, Consolas) even with useInlineStyles off; colors come from CSS.
       codeTagProps={{ className: `language-${language}` }}
       PreTag="div"
-      className="code-block my-6 overflow-x-auto rounded-2xl border border-[var(--code-border)] bg-[var(--code-bg)] p-6 shadow-sm font-mono text-sm leading-relaxed text-[var(--code-fg)]"
+      className={`code-block my-6 overflow-x-auto rounded-2xl border border-[var(--code-border)] bg-[var(--code-bg)] p-6 shadow-sm text-sm text-[var(--code-fg)] ${
+        isDiagram
+          ? "diagram-block leading-[normal]"
+          : "font-mono leading-relaxed"
+      }`}
     >
       {raw}
     </SyntaxHighlighter>

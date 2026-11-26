@@ -149,3 +149,19 @@ blockquote {
 .code-block .token.constant {
   color: var(--code-number);
 }
+
+/* Box-drawing diagrams: system mono fonts that ship ─ │ ┌ ▶ at a uniform width. */
+.diagram-block,
+.diagram-block code {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono",
+    "Noto Sans Mono", monospace;
+  font-variant-ligatures: none;
+}
+
+/* Full-width card, drawing centered inside it. When the drawing is wider than
+   the card (phones), auto margins collapse to 0 and it scrolls from the left. */
+.diagram-block code {
+  display: block;
+  width: fit-content;
+  margin-inline: auto;
+}
