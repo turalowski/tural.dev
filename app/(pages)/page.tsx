@@ -127,7 +127,7 @@ export default async function BlogPage() {
           </li>
         ))}
       </ul>
-      <footer className="mt-16 border-t pt-6 text-sm text-center text-muted-foreground">
+      <footer className="mt-8 border-t pt-6 text-sm text-center text-muted-foreground">
         <p>
           <span role="img" aria-label="robot">
             🤖
