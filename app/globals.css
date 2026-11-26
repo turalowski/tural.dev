@@ -101,18 +101,13 @@
     text-wrap: pretty;
   }
 
-  /* Article text: hyphenate long words so lines fill evenly, and justify on
-     screens wide enough that justified lines don't open big word gaps. */
+  /* Article text: justified, with long words hyphenated so the stretched
+     lines don't open big word gaps. */
   .post-body p,
   .post-body li {
+    text-align: justify;
     hyphens: auto;
     -webkit-hyphens: auto;
-  }
-  @media (min-width: 640px) {
-    .post-body p,
-    .post-body li {
-      text-align: justify;
-    }
   }
   .post-body code,
   .post-body a {
