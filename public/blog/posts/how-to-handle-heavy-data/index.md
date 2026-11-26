@@ -41,7 +41,30 @@ Virtualization is also called windowing. It's a concept to keep one long, contin
 
 The user always sees a normal scrollbar and a list that seems complete. Under the hood, we play a game with the user: showing only the rows visible in the viewport.
 
-![Virtualization: only the rows inside the viewport, plus a small overscan, exist in the DOM while the user scrolls through 50,000 rows](/images/heavy-data/virtualization.gif)
+```diagram
+Scroll container: 50,000 rows x 48px = 2,400,000px
+
+  ┌─────────────────────────────┐
+  │            row 0            │   not in the DOM
+  └─────────────────────────────┘
+  ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+  ┃          rows 1 - 5         ┃   overscan, in the DOM
+  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+  ╔═════════════════════════════╗   ◀ scrollTop = 320px
+  ║         rows 6 - 18         ║
+  ║      what the user sees     ║   viewport, 600px
+  ╚═════════════════════════════╝
+  ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+  ┃         rows 19 - 23        ┃   overscan, in the DOM
+  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+  ┌─────────────────────────────┐
+  │       rows 24 - 49,999      │   not in the DOM
+  └─────────────────────────────┘
+
+In the DOM: 23 rows out of 50,000
+
+╔═╗ visible   ┏━┓ rendered, off-screen   ┌─┐ empty space
+```
 
 ### How to do it
 
@@ -100,7 +123,22 @@ Virtualization is not free. Since the rows outside of the viewport don't exist i
 
 Pagination is another method to handle heavy data. Instead of showing all items on the same page, pagination is focused on splitting data into pages. Size of each page generally can be customized (10-25-50-100) and to see the next set of data the user moves to the next page. The most correct way of pagination requires changing the API contract, introducing query parameters and updating backend code. That's why there are 2 methods generally used.
 
-![Pagination: each page click sends a new request with a different offset, and only 5 rows are loaded and rendered at a time](/images/heavy-data/pagination.gif)
+```diagram
+┌───────────┐    ┌─────────────────────────────┐      ╔═════════════════╗
+│   Page 1  ├───▶│    GET ?offset=0&limit=5    ├─────▶║    rows 1 - 5   ║
+└───────────┘    └─────────────────────────────┘      ╚═════════════════╝
+
+┌───────────┐    ┌─────────────────────────────┐      ╔═════════════════╗
+│   Page 2  ├───▶│    GET ?offset=5&limit=5    ├─────▶║   rows 6 - 10   ║
+└───────────┘    └─────────────────────────────┘      ╚═════════════════╝
+
+┌───────────┐    ┌─────────────────────────────┐      ╔═════════════════╗
+│   Page 3  ├───▶│    GET ?offset=10&limit=5   ├─────▶║   rows 11 - 15  ║
+└───────────┘    └─────────────────────────────┘      ╚═════════════════╝
+
+Each click replaces the rows. Only 5 rows are loaded
+and rendered at a time.
+```
 
 - **Server-side pagination:** Traditional way, where each API endpoint is updated with page/offset and limit parameters. After backend implements this, frontend app shows pages, and makes correct API calls to show the data.
 - **Client-side pagination:** When API contract is limited and backend endpoints can't be updated, frontend application can load the full dataset once and implement pagination on the frontend side. The method is simple: the data is sliced in the frontend app, and only the chosen part is shown to the user.
@@ -127,7 +165,32 @@ Page number is easy to calculate: `offset = (page - 1) * limit`. That's why offs
 
 Offset is not only for page numbers. Imagine the products list has a **Load more** button at the bottom. Instead of replacing the rows, each click appends the next rows to the end of the list. Here the offset is simply the number of rows we already loaded:
 
-![Load more with offset pagination: each click requests the next rows with offset equal to the number of loaded rows, and after a new product is added on the server, one row is loaded twice](/images/heavy-data/load-more.gif)
+```diagram
+┌─────────────────────────┐        ┌───────────────────────────────────┐
+│           Load          │        │  #50,000 #49,999 #49,998 #49,997  │
+│    ?offset=0&limit=4    ├───────▶│        4 rows on the screen       │
+└────────────┬────────────┘        └───────────────────────────────────┘
+             │
+             ▼
+┌─────────────────────────┐        ┌───────────────────────────────────┐
+│        Load more        │        │  #49,996 #49,995 #49,994 #49,993  │
+│    ?offset=4&limit=4    ├───────▶│        8 rows on the screen       │
+└────────────┬────────────┘        └───────────────────────────────────┘
+             │
+             ▼
+╭─────────────────────────╮
+│   New product #50,001   │
+│   added on the server   │
+╰────────────┬────────────╯
+             │
+             ▼
+┌─────────────────────────┐        ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+│        Load more        │        ┃  #49,993 #49,992 #49,991 #49,990  ┃
+│    ?offset=8&limit=4    ├───────▶┃      #49,993 is loaded twice      ┃
+└─────────────────────────┘        ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+┏━┓ duplicate row on the screen
+```
 
 But it has 2 problems:
 
@@ -161,7 +224,32 @@ Here the main difference is `WHERE id > 40` instead of `OFFSET 40`. The database
 
 Here is the same Load more example from the offset section, but with a cursor. To keep it readable, the cursor is the plain id instead of an encoded value. The list is sorted by newest first, so `after=49993` means `WHERE id < 49993`. Even after a new product is added, the next rows start right after the last row the user saw:
 
-![Load more with cursor pagination: each click requests the rows after the last loaded id, so a new product added on the server doesn't cause duplicates](/images/heavy-data/load-more-cursor.gif)
+```diagram
+┌─────────────────────────┐        ┌───────────────────────────────────┐
+│           Load          │        │  #50,000 #49,999 #49,998 #49,997  │
+│         ?limit=4        ├───────▶│        4 rows on the screen       │
+└────────────┬────────────┘        └───────────────────────────────────┘
+             │
+             ▼
+┌─────────────────────────┐        ┌───────────────────────────────────┐
+│        Load more        │        │  #49,996 #49,995 #49,994 #49,993  │
+│   ?limit=4&after=49997  ├───────▶│        8 rows on the screen       │
+└────────────┬────────────┘        └───────────────────────────────────┘
+             │
+             ▼
+╭─────────────────────────╮
+│   New product #50,001   │
+│   added on the server   │
+╰────────────┬────────────╯
+             │
+             ▼
+┌─────────────────────────┐        ╔═══════════════════════════════════╗
+│        Load more        │        ║  #49,992 #49,991 #49,990 #49,989  ║
+│   ?limit=4&after=49993  ├───────▶║     starts right after #49,993    ║
+└─────────────────────────┘        ╚═══════════════════════════════════╝
+
+╔═╗ no duplicates, no skipped rows
+```
 
 The price is flexibility. With a cursor, we can only go to the next (or previous) page. We can't jump to page 57, and usually we don't know the total number of pages. Also the cursor depends on the sort order. If the user sorts by price, the cursor should contain the price and the id together, because many products can have the same price.
 
