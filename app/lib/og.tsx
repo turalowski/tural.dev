@@ -42,6 +42,8 @@ interface RenderOptions {
   accentFrom?: number;
   background?: string;
   foreground?: string;
+  /** Shift the text down by this many em, e.g. to centre capitals optically. */
+  offsetY?: number;
 }
 
 export function renderDiagram(
@@ -54,6 +56,7 @@ export function renderDiagram(
     accentFrom = Infinity,
     background = COLORS.background,
     foreground = COLORS.foreground,
+    offsetY = 0,
   }: RenderOptions,
 ) {
   const cols = Math.max(...lines.map((line) => line.length));
@@ -77,7 +80,14 @@ export function renderDiagram(
           background,
         }}
       >
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            position: "relative",
+            top: Math.round(offsetY * fontSize),
+          }}
+        >
           {lines.map((line, i) => (
             <div
               key={i}

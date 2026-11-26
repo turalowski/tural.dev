@@ -1,13 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { Metadata } from "next";
 import { Button } from "../components/ui/button";
 import LegacyHashRedirect from "../components/legacy-hash-redirect";
-import {
-  getAllPosts,
-  SITE_NAME,
-  SITE_URL,
-} from "@/app/lib/blog";
+import { getAllPosts, SITE_NAME, SITE_URL } from "@/app/lib/blog";
 import { isUnlocked } from "@/app/lib/unlock";
 import UnlockShortcut from "../components/unlock-shortcut";
 
@@ -47,9 +44,7 @@ export const metadata: Metadata = {
 const HIDE_POSTS = false; // Set to true to hide all posts
 
 export default async function BlogPage() {
-  const posts = HIDE_POSTS
-    ? []
-    : getAllPosts({ includeHidden: isUnlocked() });
+  const posts = HIDE_POSTS ? [] : getAllPosts({ includeHidden: isUnlocked() });
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -66,11 +61,11 @@ export default async function BlogPage() {
     blogPost: posts
       .filter((post) => !post.hidden)
       .map((post) => ({
-      "@type": "BlogPosting",
-      headline: post.title,
-      description: post.description,
-      url: `${SITE_URL}/blog/${post.slug}`,
-    })),
+        "@type": "BlogPosting",
+        headline: post.title,
+        description: post.description,
+        url: `${SITE_URL}/blog/${post.slug}`,
+      })),
   };
 
   return (
@@ -80,12 +75,23 @@ export default async function BlogPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <UnlockShortcut />
-      <header className="flex items-center justify-between gap-4 mb-8 border-b pb-4">
-        <div className="flex min-w-0 flex-wrap items-baseline gap-x-2">
-          <h1 className="text-xl font-bold tracking-tight text-foreground">
-            Tural Hajiyev
-          </h1>
-          <p className="text-base text-muted-foreground">Frontend Engineer</p>
+      <header className="flex items-center justify-between gap-4 border-b pb-4">
+        <div className="flex min-w-0 items-center gap-3">
+          <Image
+            src="/apple-icon"
+            alt=""
+            width={32}
+            height={32}
+            unoptimized
+            priority
+            className="shrink-0 rounded-md"
+          />
+          <div className="flex min-w-0 flex-wrap items-baseline gap-x-2">
+            <h1 className="text-xl font-bold tracking-tight text-foreground">
+              Tural Hajiyev
+            </h1>
+            <p className="text-base text-muted-foreground">Frontend Engineer</p>
+          </div>
         </div>
         <div className="flex shrink-0 items-center gap-2">
           <Link
@@ -127,7 +133,7 @@ export default async function BlogPage() {
           </li>
         ))}
       </ul>
-      <footer className="mt-8 border-t pt-6 text-sm text-center text-muted-foreground">
+      <footer className="border-t pt-6 text-sm text-center text-muted-foreground">
         <p>
           <span role="img" aria-label="robot">
             🤖

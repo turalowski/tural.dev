@@ -100,6 +100,25 @@
   li {
     text-wrap: pretty;
   }
+
+  /* Article text: hyphenate long words so lines fill evenly, and justify on
+     screens wide enough that justified lines don't open big word gaps. */
+  .post-body p,
+  .post-body li {
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
+  @media (min-width: 640px) {
+    .post-body p,
+    .post-body li {
+      text-align: justify;
+    }
+  }
+  .post-body code,
+  .post-body a {
+    hyphens: manual;
+    -webkit-hyphens: manual;
+  }
 }
 
 
@@ -164,4 +183,46 @@ blockquote {
   display: block;
   width: fit-content;
   margin-inline: auto;
+}
+
+/* New Year art in the side gutters (app/components/new-year-sides.tsx). */
+.new-year-side {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: calc((100% - 50rem) / 2);
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  user-select: none;
+}
+@media (min-width: 1280px) {
+  .new-year-side {
+    display: flex;
+  }
+}
+.new-year-sticky {
+  position: sticky;
+  top: 2rem;
+  bottom: 2rem;
+}
+.new-year-art {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono",
+    "Noto Sans Mono", monospace;
+  font-variant-ligatures: none;
+  font-size: 0.8125rem;
+  line-height: 1.2;
+  color: hsl(var(--muted-foreground));
+}
+.new-year-twinkle {
+  animation: new-year-twinkle 2.4s ease-in-out infinite;
+}
+@keyframes new-year-twinkle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .new-year-twinkle { animation: none; }
 }

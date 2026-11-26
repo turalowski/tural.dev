@@ -55,9 +55,8 @@ def build(title: str | list[str]) -> str:
 
 
 def build_icon() -> str:
-    c = Canvas()
-    c.box(0, 0, "T", pad=1, style="heavy")
-    return c.render() + "\n"
+    # Just the letter: a frame around it is too thin to read at favicon size.
+    return "T\n"
 
 
 def main(argv: list[str]) -> None:

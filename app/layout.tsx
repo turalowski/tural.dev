@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Figtree, Source_Code_Pro } from "next/font/google";
 import { SITE_NAME, SITE_URL } from "./lib/blog";
 import PostsHotReload from "./components/posts-hot-reload";
+import NewYearSides from "./components/new-year-sides";
 import "./globals.css";
 
 const figtree = Figtree({
@@ -53,7 +54,10 @@ export default function RootLayout({
       <body
         className={`${figtree.variable} ${sourceCodePro.variable} font-sans antialiased`}
       >
-        {children}
+        <div className="relative">
+          {children}
+          <NewYearSides />
+        </div>
         {process.env.NODE_ENV === "development" && <PostsHotReload />}
       </body>
     </html>

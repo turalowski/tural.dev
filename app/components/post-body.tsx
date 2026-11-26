@@ -70,7 +70,7 @@ export default function PostBody({ slug, content, features = {} }: PostBodyProps
     };
 
   return (
-    <div className="max-w-none">
+    <div className="post-body max-w-none">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
@@ -82,15 +82,15 @@ export default function PostBody({ slug, content, features = {} }: PostBodyProps
           h5: heading("h5", "text-lg font-bold mt-6 mb-2"),
 
           p: ({ children }) => (
-            <p className="mb-5 text-[1.125rem] leading-[1.6] text-prose">{children}</p>
+            <p className="mb-5 text-base sm:text-[1.125rem] leading-[1.6] text-prose">{children}</p>
           ),
           ul: ({ children }) => (
-            <ul className="text-[1.125rem] leading-[1.6] text-prose list-disc marker:text-brand/60 pl-6 mb-5 space-y-1">
+            <ul className="text-base sm:text-[1.125rem] leading-[1.6] text-prose list-disc marker:text-brand/60 pl-6 mb-5 space-y-1">
               {children}
             </ul>
           ),
           ol: ({ children }) => (
-            <ol className="text-[1.125rem] leading-[1.6] text-prose list-decimal marker:font-semibold marker:text-brand/70 pl-6 mb-5 space-y-1">
+            <ol className="text-base sm:text-[1.125rem] leading-[1.6] text-prose list-decimal marker:font-semibold marker:text-brand/70 pl-6 mb-5 space-y-1">
               {children}
             </ol>
           ),
