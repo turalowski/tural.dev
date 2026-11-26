@@ -3,6 +3,7 @@ id: "english-polish-2000-words"
 title: "2000 Most Common English Words in Polish"
 excerpt: "A reference table of the 2000 most common English words with their Polish translations and a simple example sentence for each."
 order: 0
+date: "2026-11-24"
 tags:
   - "Polish"
   - "English"

@@ -1,7 +1,8 @@
 ---
 title: "React Project Folder Structure — Patterns for Scalable Frontend Apps"
-excerpt: "A comparison of type-based and feature-based project folder structures."
+excerpt: "Type-based vs feature-based folder structure in React: how each one is organized, its advantages and drawbacks, and when to move from one to the other."
 order: 2
+date: "2026-07-18"
 tags:
   - "React"
   - "Architecture"

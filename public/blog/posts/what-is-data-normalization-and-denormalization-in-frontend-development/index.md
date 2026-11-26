@@ -3,6 +3,7 @@
 title: "What is data normalization and denormalization in frontend development"
 excerpt: "Normalized vs denormalized frontend state: How storing entities once prevents UI inconsistency, and when keeping API data as-is is the better choice."
 order: 10
+date: "2026-11-23"
 tags:
   - "Architecture"
   - "Frontend Engineering"

@@ -1,7 +1,8 @@
 ---
 title: "How to Rewrite Array Methods — map and filter methods from scratch"
-excerpt: "Reimplementing map, filter, reduce and flatMap from scratch"
+excerpt: "How to implement JavaScript's map and filter array methods from scratch: callbackFn, thisArg, and the details that trip people up in interviews."
 order: 5
+date: "2026-09-02"
 tags:
   - "JavaScript"
   - "Array Methods"

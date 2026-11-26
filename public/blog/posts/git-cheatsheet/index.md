@@ -2,6 +2,7 @@
 title: "Git CheatSheet"
 excerpt: "Quick review topics about Git"
 order: 7
+date: "2026-10-12"
 hidden: true
 tags:
   - "Git"

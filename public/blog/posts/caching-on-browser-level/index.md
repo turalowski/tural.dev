@@ -2,6 +2,7 @@
 title: "Browser Caching and HTTP Cache Headers"
 excerpt: "How browser caching works and the HTTP headers that control it: Cache-Control, ETag, Last-Modified and Vary, plus the right settings for HTML, assets and APIs."
 order: 12
+date: "2026-11-26"
 tags:
   - "Caching"
   - "HTTP"

@@ -17,6 +17,8 @@ export interface BlogPostMeta {
   description: string;
   order: number;
   hidden: boolean;
+  /** Publish date, YYYY-MM-DD. */
+  date?: string;
   updated?: string;
   tags: string[];
   author: string;
@@ -67,7 +69,8 @@ function parseFrontmatter(
     description,
     order,
     hidden: data.hidden === true,
-    updated: typeof data.updated === "string" ? data.updated : undefined,
+    date: parseDate(data.date),
+    updated: parseDate(data.updated),
     tags,
     author: typeof data.author === "string" ? data.author : DEFAULT_AUTHOR,
     image: typeof data.image === "string" ? data.image : undefined,
@@ -75,6 +78,26 @@ function parseFrontmatter(
     locale: typeof data.locale === "string" ? data.locale : "en",
     category: typeof data.category === "string" ? data.category : undefined,
   };
+}
+
+// gray-matter turns unquoted YAML dates into Date objects; accept both forms.
+function parseDate(value: unknown): string | undefined {
+  if (value instanceof Date && !Number.isNaN(value.getTime())) {
+    return value.toISOString().slice(0, 10);
+  }
+  if (typeof value === "string" && /^\d{4}-\d{2}-\d{2}/.test(value)) {
+    return value;
+  }
+  return undefined;
+}
+
+export function formatPostDate(date: string): string {
+  return new Date(`${date.slice(0, 10)}T00:00:00Z`).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "UTC",
+  });
 }
 
 function absoluteUrl(urlPath: string): string {
@@ -100,6 +123,7 @@ export function getOgLocale(locale: string): string {
 export function getPostImageUrl(image?: string): string | undefined {
   return image ? absoluteUrl(image) : undefined;
 }
+
 
 export function getPostSlugs(): string[] {
   if (!fs.existsSync(POSTS_DIR)) return [];
@@ -152,16 +176,35 @@ export function getAllPosts(
   return getAllPostsWithContent(options).map(({ content: _content, ...meta }) => meta);
 }
 
+/** Other published posts ranked by shared tags, then category, newest first. */
+export function getRelatedPosts(post: BlogPostMeta, limit = 3): BlogPostMeta[] {
+  const tags = new Set(post.tags.map((tag) => tag.toLowerCase()));
+  return getAllPosts()
+    .filter((other) => other.slug !== post.slug)
+    .map((other) => ({
+      other,
+      score:
+        other.tags.filter((tag) => tags.has(tag.toLowerCase())).length * 2 +
+        (post.category && other.category?.toLowerCase() === post.category.toLowerCase() ? 1 : 0),
+    }))
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => b.score - a.score || b.other.order - a.other.order)
+    .slice(0, limit)
+    .map(({ other }) => other);
+}
+
 export function buildBlogPostingJsonLd(post: BlogPostMeta) {
   const url = post.canonical ?? getPostUrl(post.slug);
   const image = getPostImageUrl(post.image);
+  const modified = post.updated ?? post.date;
 
   return {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: post.title,
     description: post.description,
-    ...(post.updated ? { dateModified: post.updated } : {}),
+    ...(post.date ? { datePublished: post.date } : {}),
+    ...(modified ? { dateModified: modified } : {}),
     author: {
       "@type": "Person",
       name: post.author,

@@ -3,6 +3,7 @@
 title: "4 Ways to Deliver LLM Responses"
 excerpt: "How to deliver LLM responses with REST, streaming (SSE), WebSockets or async jobs: how each one works, when to use it, and the trade-offs of each."
 order: 11 # Higher = newer; posts are listed highest first
+date: "2026-11-26"
 tags:
   - "LLM"
   - "AI Engineering"

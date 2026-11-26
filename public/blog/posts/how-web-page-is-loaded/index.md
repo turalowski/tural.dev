@@ -1,7 +1,8 @@
 ---
 title: "How a Web Page Loads HTML, CSS, and JS Content"
-excerpt: "What happens between typing a URL and seeing the page"
+excerpt: "How the browser loads a web page: HTML parsing, how CSS blocks rendering, how scripts block the parser, and when to use async vs defer."
 order: 4
+date: "2026-07-27"
 tags:
   - "Web Development"
   - "Browser Internals"

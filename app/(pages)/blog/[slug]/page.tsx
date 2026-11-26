@@ -58,7 +58,8 @@ export async function generateMetadata({
       url,
       locale: ogLocale,
       siteName: SITE_NAME,
-      ...(post.updated ? { modifiedTime: post.updated } : {}),
+      ...(post.date ? { publishedTime: post.date } : {}),
+      ...((post.updated ?? post.date) ? { modifiedTime: post.updated ?? post.date } : {}),
       tags: post.tags,
       authors: [post.author],
       ...(imageUrl
@@ -74,7 +75,11 @@ export async function generateMetadata({
           }
         : {}),
     },
-
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+    },
     robots: {
       index: true,
       follow: true,

@@ -3,6 +3,7 @@
 title: "Two Main Methods to Handle Data-Heavy Interfaces"
 excerpt: "Rendering 50,000 rows breaks most UIs. How virtualization and pagination (offset and cursor) handle data-heavy interfaces, and how to choose between them."
 order: 9 # Higher = newer; posts are listed highest first
+date: "2026-11-24"
 tags:
   - "Performance"
   - "Frontend Engineering"

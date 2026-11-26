@@ -2,6 +2,7 @@
 title: "Simple Search vs Binary Search"
 excerpt: "Binary search isn't smarter than simple search. It's just efficient because someone did the organizing work ahead of time."
 order: 6
+date: "2026-07-29"
 tags:
   - "Algorithms"
   - "Binary Search"

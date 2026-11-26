@@ -2,6 +2,7 @@
 title: "GraphQL vs REST API — Which one to choose?"
 excerpt: "REST gives you fixed endpoints with set responses controlled by the server. GraphQL lets the client pick the exact data needed in a single request."
 order: 3
+date: "2026-07-27"
 tags:
   - "API Design"
   - "GraphQL"

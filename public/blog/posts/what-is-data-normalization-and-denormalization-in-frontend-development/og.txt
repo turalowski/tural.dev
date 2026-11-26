@@ -1,0 +1,12 @@
+┌───────────────────────────────────────────┐
+│                                           │
+│       What is data normalization and      │
+│        denormalization in frontend        │
+│                development                │
+│                                           │
+└─────────────────────┬─────────────────────┘
+                      │
+                      ▼
+               ╭─────────────╮
+               │  tural.dev  │
+               ╰─────────────╯

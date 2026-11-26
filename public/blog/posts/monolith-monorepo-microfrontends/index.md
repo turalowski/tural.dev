@@ -1,7 +1,8 @@
 ---
 title: "Monolith, Monorepo, or Microfrontends?"
-excerpt: "Monoliths are simple, monorepos keep projects organized, and most teams don't need microfrontends."
+excerpt: "Monolith, monorepo or microfrontends? What each one actually solves, why they are separate decisions, and why most frontend teams don't need microfrontends."
 order: 1
+date: "2026-08-22"
 tags:
   [
     "Architecture",

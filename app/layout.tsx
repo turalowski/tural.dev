@@ -34,6 +34,9 @@ export const metadata: Metadata = {
     description:
       "Personal website of Tural Hajiyev. Frontend engineer writing about web architecture, product, and engineering practice.",
   },
+  twitter: {
+    card: "summary_large_image",
+  },
   robots: {
     index: true,
     follow: true,

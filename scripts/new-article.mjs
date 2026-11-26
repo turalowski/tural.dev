@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // Usage: npm run new-article "2 ways to show heavy data"
+import { spawnSync } from "child_process";
 import fs from "fs";
 import path from "path";
 
@@ -44,9 +45,16 @@ const content = fs
   .readFileSync(TEMPLATE_PATH, "utf8")
   .replace(/^title:.*$/m, `title: ${JSON.stringify(title)}`)
   .replace(/^order:\s*\d+/m, `order: ${maxOrder + 1}`)
+  .replace(/^date:.*$/m, `date: "${new Date().toISOString().slice(0, 10)}"`)
   .replaceAll("<slug>", slug);
 
 fs.mkdirSync(postDir);
 fs.writeFileSync(path.join(postDir, "index.md"), content);
 
 console.log(`Created ${path.relative(process.cwd(), path.join(postDir, "index.md"))}`);
+
+// Social preview diagram (og.txt). Re-run `yarn og <slug>` if the title changes.
+const og = spawnSync("python3", ["-I", "scripts/og-diagrams.py", slug], { stdio: "inherit" });
+if (og.status !== 0) {
+  console.warn(`Could not build og.txt; run \`yarn og ${slug}\` later.`);
+}
