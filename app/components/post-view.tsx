@@ -70,7 +70,8 @@ export default function PostView({ post }: { post: BlogPost }) {
           </span>{" "}
           This article may use AI assistance to fix typos and improve the
           organization of sections, but all content and ideas are the brain
-          product of the original author.{" "}
+          product of the original author. Some articles are more like learning
+          notes, written while I was studying a topic.{" "}
           <a
             href="https://github.com/turalowski"
             target="_blank"
