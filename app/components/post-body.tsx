@@ -85,12 +85,12 @@ export default function PostBody({ slug, content, features = {} }: PostBodyProps
             <p className="mb-5 text-base sm:text-[1.125rem] leading-[1.6] text-prose">{children}</p>
           ),
           ul: ({ children }) => (
-            <ul className="text-base sm:text-[1.125rem] leading-[1.6] text-prose list-disc marker:text-brand/60 pl-6 mb-5 space-y-1">
+            <ul className="text-base sm:text-[1.125rem] leading-[1.6] text-prose list-disc marker:text-brand/60 pl-4 mb-5 space-y-1">
               {children}
             </ul>
           ),
           ol: ({ children }) => (
-            <ol className="text-base sm:text-[1.125rem] leading-[1.6] text-prose list-decimal marker:font-semibold marker:text-brand/70 pl-6 mb-5 space-y-1">
+            <ol className="text-base sm:text-[1.125rem] leading-[1.6] text-prose list-decimal marker:font-semibold marker:text-brand/70 pl-5 mb-5 space-y-1">
               {children}
             </ol>
           ),
